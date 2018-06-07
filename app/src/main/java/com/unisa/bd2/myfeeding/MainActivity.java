@@ -12,6 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+
+import org.bson.Document;
+
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -67,7 +72,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        MongoCollection<Document> collection = ConnectionDB.getConnection();
 
+        MongoCursor<Document> cursor = collection.find().iterator();
+        try {
+            while (cursor.hasNext()) {
+                System.out.println("RECORD " + cursor.next().toJson());
+            }
+        } finally {
+            cursor.close();
+        }
     }
 
     @Override
