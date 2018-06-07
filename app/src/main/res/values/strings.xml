@@ -1,3 +1,12 @@
 <resources>
+
     <string name="app_name">MyFeeding</string>
+    <string name="app_name_label">MyFeeding</string>
+    <string name="import_s">Import</string>
+    <string name="gallery">Gallery</string>
+    <string name="slideshow">SlideShow</string>
+    <string name="tools">Tools</string>
+    <string name="copyright_name">Ue</string>
+
+
 </resources>
