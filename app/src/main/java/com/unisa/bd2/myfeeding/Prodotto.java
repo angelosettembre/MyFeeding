@@ -1,5 +1,6 @@
 package com.unisa.bd2.myfeeding;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,15 +10,17 @@ public class Prodotto implements Parcelable {
     String productName;
     String imageUrl;
     String genericName;
+    Bitmap imageProduct;
 
     public Prodotto() {
     }
 
-    public Prodotto(long barcode, String productName, String imageUrl, String genericName) {
+    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct) {
         this.barcode = barcode;
         this.productName = productName;
         this.imageUrl = imageUrl;
         this.genericName = genericName;
+        this.imageProduct = imageProduct;
     }
 
 
@@ -26,6 +29,7 @@ public class Prodotto implements Parcelable {
         productName = in.readString();
         imageUrl = in.readString();
         genericName = in.readString();
+        imageProduct = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
     }
 
     public static final Creator<Prodotto> CREATOR = new Creator<Prodotto>() {
@@ -52,6 +56,7 @@ public class Prodotto implements Parcelable {
         dest.writeString(productName);
         dest.writeString(imageUrl);
         dest.writeString(genericName);
+        dest.writeValue(imageProduct);
     }
 
     public long getBarcode() {
@@ -86,7 +91,21 @@ public class Prodotto implements Parcelable {
         this.genericName = genericName;
     }
 
+    public Bitmap getImageProduct() {
+        return imageProduct;
+    }
 
+    public void setImageProduct(Bitmap imageProduct) {
+        this.imageProduct = imageProduct;
+    }
 
-
+    @Override
+    public String toString() {
+        return "Prodotto{" +
+                "barcode=" + barcode +
+                ", productName='" + productName + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", genericName='" + genericName + '\'' +
+                '}';
+    }
 }

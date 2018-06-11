@@ -38,6 +38,7 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         TextView barCode;
         TextView genericName;
         ImageView image;
+        //Bitmap logo;
 
         productName = v.findViewById(R.id.nameProduct);
         barCode = v.findViewById(R.id.barCode);
@@ -45,10 +46,20 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         image = v.findViewById(R.id.imageProduct);
 
         productName.setText(p.getProductName());
-        barCode.setText((int) p.getBarcode());
+        barCode.setText(String.valueOf(p.getBarcode()));
         genericName.setText(p.getGenericName());
+        image.setImageBitmap(p.getImageProduct());
 
-        new DownLoadImageTask(image).execute(p.getImageUrl());
+
+        /*try {
+            URL newurl = new URL(p.getImageUrl());
+            logo = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
+            image.setImageBitmap(logo);
+        } catch (Exception e){
+            e.printStackTrace();
+        }*/
+
+        //new DownLoadImageTask(image).execute(p.getImageUrl());
 
         return v;
     }
@@ -67,15 +78,17 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         protected Bitmap doInBackground(String...urls){
             String urlOfImage = urls[0];
             Bitmap logo = null;
-            try{
-                InputStream is = new URL(urlOfImage).openStream();
+            if(urlOfImage != null){
+                try{
+                    InputStream is = new URL(urlOfImage).openStream();
                 /*
                     decodeStream(InputStream is)
                         Decode an input stream into a bitmap.
                  */
-                logo = BitmapFactory.decodeStream(is);
-            }catch(Exception e){ // Catch the download exception
-                e.printStackTrace();
+                    logo = BitmapFactory.decodeStream(is);
+                }catch(Exception e){ // Catch the download exception
+                    e.printStackTrace();
+                }
             }
             return logo;
         }
