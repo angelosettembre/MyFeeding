@@ -97,6 +97,7 @@ public class SearchProductActivity extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
+
                             Bundle bundle = new Bundle();
                             bundle.putParcelableArrayList("lista", listResult);
 
