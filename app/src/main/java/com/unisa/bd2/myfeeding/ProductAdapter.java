@@ -1,9 +1,6 @@
 package com.unisa.bd2.myfeeding;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.URL;
 
 public class ProductAdapter extends ArrayAdapter<Prodotto> {
     private LayoutInflater inflater;
@@ -24,7 +19,6 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         resource = resourceId;
         inflater = LayoutInflater.from(context);
     }
-
 
     @Override
     public View getView(int position, View v, ViewGroup parent) {
@@ -38,7 +32,6 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         TextView barCode;
         TextView genericName;
         ImageView image;
-        //Bitmap logo;
 
         productName = v.findViewById(R.id.nameProduct);
         barCode = v.findViewById(R.id.barCode);
@@ -50,55 +43,6 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         genericName.setText(p.getGenericName());
         image.setImageBitmap(p.getImageProduct());
 
-
-        /*try {
-            URL newurl = new URL(p.getImageUrl());
-            logo = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
-            image.setImageBitmap(logo);
-        } catch (Exception e){
-            e.printStackTrace();
-        }*/
-
-        //new DownLoadImageTask(image).execute(p.getImageUrl());
-
         return v;
-    }
-
-    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
-        ImageView imageView;
-
-        public DownLoadImageTask(ImageView imageView){
-            this.imageView = imageView;
-        }
-
-        /*
-            doInBackground(Params... params)
-                Override this method to perform a computation on a background thread.
-         */
-        protected Bitmap doInBackground(String...urls){
-            String urlOfImage = urls[0];
-            Bitmap logo = null;
-            if(urlOfImage != null){
-                try{
-                    InputStream is = new URL(urlOfImage).openStream();
-                /*
-                    decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
-                    logo = BitmapFactory.decodeStream(is);
-                }catch(Exception e){ // Catch the download exception
-                    e.printStackTrace();
-                }
-            }
-            return logo;
-        }
-
-        /*
-            onPostExecute(Result result)
-                Runs on the UI thread after doInBackground(Params...).
-         */
-        protected void onPostExecute(Bitmap result){
-            imageView.setImageBitmap(result);
-        }
     }
 }
