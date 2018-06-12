@@ -6,10 +6,11 @@
     <string name="gallery">Gallery</string>
     <string name="slideshow">SlideShow</string>
     <string name="tools">Tools</string>
-    <string name="copyright_name">Ue</string>
+    <string name="copyright_name">SETTEMBRE-TROPEANO ©</string>
     <string name="take_barcode_picture">Scatta sta foto</string>
     <string name="scan_barcode">Scansione Barcode</string>
     <string name="open_camera">Apri Camera</string>
+    <string name="search">Ricerca prodotto</string>
 
 
 </resources>

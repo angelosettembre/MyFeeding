@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
                 // Add code here to update the UI based on the item selected
                 // For example, swap UI fragments here
                 int id = item.getItemId();
+
+                if(id == R.id.nav_search){
+                    fragment = new SearchProductActivity();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                    mDrawerLayout.closeDrawers();
+                    return true;
+                }
 
                 if (id == R.id.nav_barcode) {
                     fragment = new BarcodeScannerActivity();
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }
   */
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
