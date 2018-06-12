@@ -3,7 +3,6 @@
     package="com.unisa.bd2.myfeeding">
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +15,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ResultSearchActivity"
+            android:label="Ricerca Prodotti"
+            android:parentActivityName=".MainActivity"
+            >
         </activity>
 
     </application>

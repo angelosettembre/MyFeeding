@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
 public class Prodotto implements Parcelable {
 
     long barcode;
@@ -11,25 +14,35 @@ public class Prodotto implements Parcelable {
     String imageUrl;
     String genericName;
     Bitmap imageProduct;
+    byte[] imageByte;
 
     public Prodotto() {
     }
 
-    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct) {
+    public Prodotto(long barcode, String productName, String imageUrl, String genericName, byte[] imageByte) {
         this.barcode = barcode;
         this.productName = productName;
         this.imageUrl = imageUrl;
         this.genericName = genericName;
-        this.imageProduct = imageProduct;
+        this.imageByte = imageByte;
     }
 
+    public byte[] getImageByte() {
+        return imageByte;
+    }
+
+    public void setImageByte(byte[] imageByte) {
+        this.imageByte = imageByte;
+    }
 
     protected Prodotto(Parcel in) {
         barcode = in.readLong();
         productName = in.readString();
         imageUrl = in.readString();
         genericName = in.readString();
-        imageProduct = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
+        imageByte = new byte[in.readInt()];
+        in.readByteArray(imageByte);
+        //imageProduct = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
     }
 
     public static final Creator<Prodotto> CREATOR = new Creator<Prodotto>() {
@@ -56,7 +69,9 @@ public class Prodotto implements Parcelable {
         dest.writeString(productName);
         dest.writeString(imageUrl);
         dest.writeString(genericName);
-        dest.writeValue(imageProduct);
+        dest.writeInt(imageByte.length);
+        dest.writeByteArray(imageByte);
+        //dest.writeValue(imageProduct);
     }
 
     public long getBarcode() {
@@ -106,6 +121,8 @@ public class Prodotto implements Parcelable {
                 ", productName='" + productName + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", genericName='" + genericName + '\'' +
+                ", imageProduct=" + imageProduct +
+                ", imageByte=" + Arrays.toString(imageByte) +
                 '}';
     }
 }
