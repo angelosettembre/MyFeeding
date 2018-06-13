@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class ResultSearchActivity extends Fragment {
@@ -42,11 +44,28 @@ public class ResultSearchActivity extends Fragment {
         addElement();
         listView.setAdapter(adapter);
 
+
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Prodotto p = adapter.getItem(position);
+                System.out.println("PRODOTTO RICEVUTO "+ p.toString());
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("prodotto",p);
+
+                Fragment fragment = new ProductDetails();
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).commit();
+            }
+        });
     }
 
     public void addElement(){

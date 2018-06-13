@@ -12,9 +12,8 @@ public class Prodotto implements Parcelable {
     String genericName;
     Bitmap imageProduct;
 
-    int quantity;
+    String quantity;
     String brand;
-    String link;
 
     /*Ingredients*/
     String ingredients;
@@ -24,12 +23,12 @@ public class Prodotto implements Parcelable {
 
     /*Nutrition*/
     String imageNutritionUrl;
-    int energy100, fat100, carbohydrates100, sugars100, fiber100, proteins100, salt100, sodium100;
+    String energy100, fat100, carbohydrates100, sugars100, fiber100, proteins100, salt100, sodium100;
 
     public Prodotto() {
     }
 
-    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct, int quantity, String brand, String link, String ingredients, String ingredientsImageUrl, String allergens, String imageNutritionUrl, int energy100, int fat100, int carbohydrates100, int sugars100, int fiber100, int proteins100, int salt100, int sodium100) {
+    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct, String quantity, String brand, String ingredients, String ingredientsImageUrl, String allergens, String imageNutritionUrl, String energy100, String fat100, String carbohydrates100, String sugars100, String fiber100, String proteins100, String salt100, String sodium100) {
         this.barcode = barcode;
         this.productName = productName;
         this.imageUrl = imageUrl;
@@ -37,7 +36,6 @@ public class Prodotto implements Parcelable {
         this.imageProduct = imageProduct;
         this.quantity = quantity;
         this.brand = brand;
-        this.link = link;
         this.ingredients = ingredients;
         this.ingredientsImageUrl = ingredientsImageUrl;
         this.allergens = allergens;
@@ -59,21 +57,20 @@ public class Prodotto implements Parcelable {
         imageUrl = in.readString();
         genericName = in.readString();
         imageProduct = (Bitmap) in.readValue(Bitmap.class.getClassLoader());
-        quantity = in.readInt();
+        quantity = in.readString();
         brand = in.readString();
-        link = in.readString();
         ingredients = in.readString();
         ingredientsImageUrl = in.readString();
         allergens = in.readString();
         imageNutritionUrl = in.readString();
-        energy100 = in.readInt();
-        fat100 = in.readInt();
-        carbohydrates100 = in.readInt();
-        sugars100 = in.readInt();
-        fiber100 = in.readInt();
-        proteins100 = in.readInt();
-        salt100 = in.readInt();
-        sodium100 = in.readInt();
+        energy100 = in.readString();
+        fat100 = in.readString();
+        carbohydrates100 = in.readString();
+        sugars100 = in.readString();
+        fiber100 = in.readString();
+        proteins100 = in.readString();
+        salt100 = in.readString();
+        sodium100 = in.readString();
     }
 
     public static final Creator<Prodotto> CREATOR = new Creator<Prodotto>() {
@@ -101,20 +98,20 @@ public class Prodotto implements Parcelable {
         dest.writeString(imageUrl);
         dest.writeString(genericName);
         dest.writeValue(imageProduct);
-        dest.writeInt(quantity);
+        dest.writeString(quantity);
         dest.writeString(brand);
-        dest.writeString(link);
         dest.writeString(ingredients);
         dest.writeString(ingredientsImageUrl);
         dest.writeString(allergens);
         dest.writeString(imageNutritionUrl);
-        dest.writeInt(energy100);
-        dest.writeInt(fat100);
-        dest.writeInt(carbohydrates100);
-        dest.writeInt(fiber100);
-        dest.writeInt(proteins100);
-        dest.writeInt(salt100);
-        dest.writeInt(sodium100);
+        dest.writeString(energy100);
+        dest.writeString(fat100);
+        dest.writeString(carbohydrates100);
+        dest.writeString(fiber100);
+        dest.writeString(sugars100);
+        dest.writeString(proteins100);
+        dest.writeString(salt100);
+        dest.writeString(sodium100);
     }
 
     public long getBarcode() {
@@ -157,11 +154,11 @@ public class Prodotto implements Parcelable {
         this.imageProduct = imageProduct;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
@@ -171,14 +168,6 @@ public class Prodotto implements Parcelable {
 
     public void setBrand(String brand) {
         this.brand = brand;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getIngredients() {
@@ -213,67 +202,67 @@ public class Prodotto implements Parcelable {
         this.imageNutritionUrl = imageNutritionUrl;
     }
 
-    public int getEnergy100() {
+    public String getEnergy100() {
         return energy100;
     }
 
-    public void setEnergy100(int energy100) {
+    public void setEnergy100(String energy100) {
         this.energy100 = energy100;
     }
 
-    public int getFat100() {
+    public String getFat100() {
         return fat100;
     }
 
-    public void setFat100(int fat100) {
+    public void setFat100(String fat100) {
         this.fat100 = fat100;
     }
 
-    public int getCarbohydrates100() {
+    public String getCarbohydrates100() {
         return carbohydrates100;
     }
 
-    public void setCarbohydrates100(int carbohydrates100) {
+    public void setCarbohydrates100(String carbohydrates100) {
         this.carbohydrates100 = carbohydrates100;
     }
 
-    public int getSugars100() {
+    public String getSugars100() {
         return sugars100;
     }
 
-    public void setSugars100(int sugars100) {
+    public void setSugars100(String sugars100) {
         this.sugars100 = sugars100;
     }
 
-    public int getFiber100() {
+    public String getFiber100() {
         return fiber100;
     }
 
-    public void setFiber100(int fiber100) {
+    public void setFiber100(String fiber100) {
         this.fiber100 = fiber100;
     }
 
-    public int getProteins100() {
+    public String getProteins100() {
         return proteins100;
     }
 
-    public void setProteins100(int proteins100) {
+    public void setProteins100(String proteins100) {
         this.proteins100 = proteins100;
     }
 
-    public int getSalt100() {
+    public String getSalt100() {
         return salt100;
     }
 
-    public void setSalt100(int salt100) {
+    public void setSalt100(String salt100) {
         this.salt100 = salt100;
     }
 
-    public int getSodium100() {
+    public String getSodium100() {
         return sodium100;
     }
 
-    public void setSodium100(int sodium100) {
+    public void setSodium100(String sodium100) {
         this.sodium100 = sodium100;
     }
 
@@ -287,7 +276,6 @@ public class Prodotto implements Parcelable {
                 ", imageProduct=" + imageProduct +
                 ", quantity=" + quantity +
                 ", brand='" + brand + '\'' +
-                ", link='" + link + '\'' +
                 ", ingredients='" + ingredients + '\'' +
                 ", ingredientsImageUrl='" + ingredientsImageUrl + '\'' +
                 ", allergens='" + allergens + '\'' +
@@ -302,5 +290,4 @@ public class Prodotto implements Parcelable {
                 ", sodium100=" + sodium100 +
                 '}';
     }
-
 }
