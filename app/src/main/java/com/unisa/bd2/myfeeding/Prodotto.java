@@ -24,6 +24,7 @@ public class Prodotto implements Parcelable {
     }
 
 
+
     protected Prodotto(Parcel in) {
         barcode = in.readLong();
         productName = in.readString();
@@ -106,6 +107,7 @@ public class Prodotto implements Parcelable {
                 ", productName='" + productName + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", genericName='" + genericName + '\'' +
+                ", imageProduct=" + imageProduct +
                 '}';
     }
 }

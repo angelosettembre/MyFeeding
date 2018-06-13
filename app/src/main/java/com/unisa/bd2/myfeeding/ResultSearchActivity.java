@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
+import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ResultSearchActivity extends Fragment {
@@ -16,16 +16,16 @@ public class ResultSearchActivity extends Fragment {
     ProductAdapter adapter;
     ListView listView;
     View view;
+    TextView numResult;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if(view==null)
-        {
+        if(view==null) {
             view = inflater.inflate(R.layout.app_list_product, container,false);
         }
-        else
-        {
+        else {
             ViewGroup parent = (ViewGroup) view.getParent();
             parent.removeView(view);
         }
@@ -33,8 +33,12 @@ public class ResultSearchActivity extends Fragment {
         adapter = new ProductAdapter(getActivity(),R.layout.app_detail_listelement);
 
         listView = (ListView) view.findViewById(R.id.listProduct);
+        numResult = view.findViewById(R.id.numResult);
 
         listProduct = getArguments().getParcelableArrayList("lista");
+        numResult.setText(String.valueOf(listProduct.size()));
+
+
         addElement();
         listView.setAdapter(adapter);
 
