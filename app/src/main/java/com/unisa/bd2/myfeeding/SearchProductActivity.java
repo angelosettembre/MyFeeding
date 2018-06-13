@@ -117,7 +117,7 @@ public class SearchProductActivity extends Fragment {
                     for (Document d : result) {
                         try {
                             listResult.add(new Prodotto(d.getLong("code"), d.getString("product_name")
-                                    , d.getString("image_url"), d.getString("generic_name"), compressBitmap(downloadImage(d.getString("image_url")))));
+                                    , d.getString("image_url"), d.getString("generic_name"), downloadImage(d.getString("image_url"))));
                             System.out.println("DOCUMENTOOO " + d.getLong("code") + " " + d.getString("product_name")
                                     + " " + d.getString("image_url") + " " + d.getString("generic_name"));
                             System.out.println("DOCUMENTOOO " + d.toJson());
@@ -126,27 +126,25 @@ public class SearchProductActivity extends Fragment {
                             icon = getResources().getDrawable(R.drawable.image_not_found);
                             Bitmap bitmap = ((BitmapDrawable)icon).getBitmap();
                             listResult.add(new Prodotto(d.getLong("code"), d.getString("product_name")
-                                    , d.getString("image_url"), d.getString("generic_name"), compressBitmap(bitmap)));
+                                    , d.getString("image_url"), d.getString("generic_name"), ((BitmapDrawable) icon).getBitmap()));
                             e.printStackTrace();
                         }
                     }
-                    /*
+
+
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("lista", listResult);
 
                     Fragment fragment = new ResultSearchActivity();
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).commit();
-                    */
+
 
                     /*for(Prodotto p: listResult){
                         System.out.println("LISTA"+p.toString());
 
                     }*/
 
-                    Intent i = new Intent(getContext(), ResultSearchActivity.class);
-                    i.putParcelableArrayListExtra("lista", listResult);
-                    startActivity(i);
                     //after he logic is done, close the progress dialog
                     ringProgressDialog.dismiss();
                 }
@@ -161,13 +159,6 @@ public class SearchProductActivity extends Fragment {
         return logo;
     }
 
-
-    public byte[] compressBitmap(Bitmap b){
-        ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.JPEG, 100,bStream);
-        byte[] byteArray = bStream.toByteArray();
-        return  byteArray;
-    }
 
     @Override
     public void onPause() {

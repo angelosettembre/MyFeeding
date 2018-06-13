@@ -16,12 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ResultSearchActivity"
-            android:label="Ricerca Prodotti"
-            android:parentActivityName=".MainActivity"
-            >
-        </activity>
 
     </application>
     <uses-permission android:name="android.permission.CAMERA" />
