@@ -78,6 +78,7 @@ public class SommarioFragment extends Fragment {
             }
         }
 
+
         nameprductView.setText(prod.getProductName());
         genericNameView.setText(prod.getGenericName());
         barcodeView.setText(String.valueOf(prod.getBarcode()));
