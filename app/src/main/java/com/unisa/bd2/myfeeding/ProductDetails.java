@@ -27,6 +27,9 @@ public class ProductDetails extends Fragment {
             parent.removeView(view);
         }
 
+        prod = getArguments().getParcelable("prodotto");
+        System.out.println("PRODOTTO;;; "+prod.toString());
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
@@ -36,15 +39,22 @@ public class ProductDetails extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("TABELLA NUTRIZIONALE"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+
         final PagerAdapter adapter = new PagerAdapter
-                (getFragmentManager(), tabLayout.getTabCount());
+                (getFragmentManager(), tabLayout.getTabCount(),prod);
+
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
@@ -57,12 +67,11 @@ public class ProductDetails extends Fragment {
 
             }
         });
-        prod = getArguments().getParcelable("prodotto");
-        System.out.println("PRODOTTO;;; "+prod.toString());
-
 
         return view;
     }
+
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

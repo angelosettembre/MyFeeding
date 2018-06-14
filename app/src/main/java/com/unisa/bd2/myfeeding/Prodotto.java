@@ -14,6 +14,7 @@ public class Prodotto implements Parcelable {
 
     String quantity;
     String brand;
+    String nutritionScore;
 
     /*Ingredients*/
     String ingredients;
@@ -28,7 +29,7 @@ public class Prodotto implements Parcelable {
     public Prodotto() {
     }
 
-    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct, String quantity, String brand, String ingredients, String ingredientsImageUrl, String allergens, String imageNutritionUrl, String energy100, String fat100, String carbohydrates100, String sugars100, String fiber100, String proteins100, String salt100, String sodium100) {
+    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct, String quantity, String brand, String ingredients, String ingredientsImageUrl, String allergens, String imageNutritionUrl, String energy100, String fat100, String carbohydrates100, String sugars100, String fiber100, String proteins100, String salt100, String sodium100, String nutritionScore) {
         this.barcode = barcode;
         this.productName = productName;
         this.imageUrl = imageUrl;
@@ -48,6 +49,7 @@ public class Prodotto implements Parcelable {
         this.proteins100 = proteins100;
         this.salt100 = salt100;
         this.sodium100 = sodium100;
+        this.nutritionScore = nutritionScore;
     }
 
 
@@ -71,6 +73,7 @@ public class Prodotto implements Parcelable {
         proteins100 = in.readString();
         salt100 = in.readString();
         sodium100 = in.readString();
+        nutritionScore = in.readString();
     }
 
     public static final Creator<Prodotto> CREATOR = new Creator<Prodotto>() {
@@ -112,6 +115,7 @@ public class Prodotto implements Parcelable {
         dest.writeString(proteins100);
         dest.writeString(salt100);
         dest.writeString(sodium100);
+        dest.writeString(nutritionScore);
     }
 
     public long getBarcode() {
@@ -266,6 +270,14 @@ public class Prodotto implements Parcelable {
         this.sodium100 = sodium100;
     }
 
+    public String getNutritionScore() {
+        return nutritionScore;
+    }
+
+    public void setNutritionScore(String nutritionScore) {
+        this.nutritionScore = nutritionScore;
+    }
+
     @Override
     public String toString() {
         return "Prodotto{" +
@@ -274,20 +286,21 @@ public class Prodotto implements Parcelable {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", genericName='" + genericName + '\'' +
                 ", imageProduct=" + imageProduct +
-                ", quantity=" + quantity +
+                ", quantity='" + quantity + '\'' +
                 ", brand='" + brand + '\'' +
+                ", nutritionScore='" + nutritionScore + '\'' +
                 ", ingredients='" + ingredients + '\'' +
                 ", ingredientsImageUrl='" + ingredientsImageUrl + '\'' +
                 ", allergens='" + allergens + '\'' +
                 ", imageNutritionUrl='" + imageNutritionUrl + '\'' +
-                ", energy100=" + energy100 +
-                ", fat100=" + fat100 +
-                ", carbohydrates100=" + carbohydrates100 +
-                ", sugars100=" + sugars100 +
-                ", fiber100=" + fiber100 +
-                ", proteins100=" + proteins100 +
-                ", salt100=" + salt100 +
-                ", sodium100=" + sodium100 +
+                ", energy100='" + energy100 + '\'' +
+                ", fat100='" + fat100 + '\'' +
+                ", carbohydrates100='" + carbohydrates100 + '\'' +
+                ", sugars100='" + sugars100 + '\'' +
+                ", fiber100='" + fiber100 + '\'' +
+                ", proteins100='" + proteins100 + '\'' +
+                ", salt100='" + salt100 + '\'' +
+                ", sodium100='" + sodium100 + '\'' +
                 '}';
     }
 }
