@@ -2,7 +2,6 @@ package com.unisa.bd2.myfeeding;
 
 
 import android.Manifest;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -21,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -63,13 +60,7 @@ public class BarcodeScannerActivity extends Fragment {
             public void onClick(View v) {
 
                 if (intentData.length() > 0) {
-                    if (isEmail)
-
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-//                    startActivity(new Intent(BarcodeScannerActivity.this, EmailActivity.class).putExtra("email_address", intentData));
-                    else {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-                    }
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
                 }
 
 
@@ -135,20 +126,12 @@ public class BarcodeScannerActivity extends Fragment {
 
                         @Override
                         public void run() {
+                            btnAction.setText("LAUNCH URL");
+                            intentData = barcodes.valueAt(0).displayValue;
+                            txtBarcodeValue.setText(intentData);
+                            Toast.makeText(getContext().getApplicationContext(), "Connessione DB", Toast.LENGTH_SHORT).show();
+                            Querier.queryTheDB(intentData, getContext(), getResources());
 
-                            if (barcodes.valueAt(0).email != null) {
-                                txtBarcodeValue.removeCallbacks(null);
-                                intentData = barcodes.valueAt(0).email.address;
-                                txtBarcodeValue.setText(intentData);
-                                isEmail = true;
-                                btnAction.setText("ADD CONTENT TO THE MAIL");
-                            } else {
-                                isEmail = false;
-                                btnAction.setText("LAUNCH URL");
-                                intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText(intentData);
-
-                            }
                         }
                     });
 

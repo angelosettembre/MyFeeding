@@ -21,14 +21,6 @@ public class SommarioFragment extends Fragment {
     TextView quantityView;
     TextView brandsView;
 
-    String nameprod;
-    String genericnameprod;
-    String barcodeprod;
-    String quantity;
-    String brands;
-    Bitmap imageProd;
-    Bitmap nustriScoreimg;
-
     View view;
     Prodotto prod;
 
@@ -60,25 +52,39 @@ public class SommarioFragment extends Fragment {
 
         imageProductView.setImageBitmap(prod.getImageProduct());
 
-        String value = prod.getNutritionScore();
+        System.out.println("NUTRITIONSCORE "+prod.getNutritionScore());
 
+        String value = prod.getNutritionScore();
 
         if(prod.getNutritionScore()==null){
             nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.image_not_found));
         }
 
         else {
-            switch (prod.getNutritionScore()) {
-                case "a":
-                    nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_a));
-                case "b":
-                    nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_b));
-                case "c":
-                    nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_c));
-                case "d":
-                    nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_d));
+            if(value.equals("a")){
+                nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_a));
+            }
+            else if(value.equals("b")){
+                nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_b));
+            }
+            else if(value.equals("c")){
+                nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_c));
+            }
+            else if(value.equals("d")){
+                nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_d));
+            }
+            else if(value.equals("e")) {
+                nutriScoreView.setImageDrawable(getResources().getDrawable(R.drawable.nutriscore_e));
             }
         }
+
+
+        nameprductView.setText(prod.getProductName());
+        genericNameView.setText(prod.getGenericName());
+        barcodeView.setText(String.valueOf(prod.getBarcode()));
+        quantityView.setText(prod.getQuantity());
+        brandsView.setText(prod.getBrand());
+
 
         return view;
 
