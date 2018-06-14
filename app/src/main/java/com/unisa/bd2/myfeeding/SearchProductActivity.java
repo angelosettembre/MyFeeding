@@ -131,7 +131,10 @@ public class SearchProductActivity extends Fragment {
                                     d.getString("proteins_100g"),
                                     d.getString("salt_100g"),
                                     d.getString("sodium_100g"),
-                                    d.getString("nutrition_grade_fr")));
+                                    d.getString("nutrition_grade_fr"),
+                                    d.getString("additives_en"),
+                                    d.getString("ingredients_from_palm_oil_tags"),
+                                    d.getString("traces")));
 
                             System.out.println("DOCUMENTOOO " + d.getLong("code") + " " + d.getString("product_name")
                                     + " " + d.getString("image_url") + " " + d.getString("generic_name"));
@@ -159,7 +162,10 @@ public class SearchProductActivity extends Fragment {
                                     d.getString("proteins_100g"),
                                     d.getString("salt_100g"),
                                     d.getString("sodium_100g"),
-                                    d.getString("nutrition_grade_fr")));
+                                    d.getString("nutrition_grade_fr"),
+                                    d.getString("additives_en"),
+                                    d.getString("ingredients_from_palm_oil_tags"),
+                                    d.getString("traces")));
                             e.printStackTrace();
                         }
                     }
