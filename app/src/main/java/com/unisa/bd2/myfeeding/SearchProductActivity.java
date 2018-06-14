@@ -82,12 +82,6 @@ public class SearchProductActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 doSearch();
-                /*Block<Document> printBlock = new Block<Document>() {
-                    @Override
-                    public void apply(final Document document) {
-                        System.out.println("DOCUMENTOOO "+document.toJson());
-                    }
-                };*/
             }
         });
     }
@@ -102,8 +96,10 @@ public class SearchProductActivity extends Fragment {
         BasicDBObject regexQuery = new BasicDBObject();
         regexQuery.put("product_name", new BasicDBObject("$regex", prod).append("$options", "i"));
 
-        result = collection.find(regexQuery)
-                .projection(fields(include("code", "product_name", "generic_name", "image_url")));
+        //result = collection.find(regexQuery)
+        //        .projection(fields(include("code", "product_name", "generic_name", "image_url")));
+
+        result = collection.find(regexQuery);
         long count = collection.count(regexQuery);
 
         if (count == 0) {
@@ -134,7 +130,8 @@ public class SearchProductActivity extends Fragment {
                                     d.getString("fiber_100g") ,
                                     d.getString("proteins_100g"),
                                     d.getString("salt_100g"),
-                                    d.getString("sodium_100g")));
+                                    d.getString("sodium_100g"),
+                                    d.getString("nutrition_grade_fr")));
 
                             System.out.println("DOCUMENTOOO " + d.getLong("code") + " " + d.getString("product_name")
                                     + " " + d.getString("image_url") + " " + d.getString("generic_name"));
@@ -161,7 +158,8 @@ public class SearchProductActivity extends Fragment {
                                     d.getString("fiber_100g") ,
                                     d.getString("proteins_100g"),
                                     d.getString("salt_100g"),
-                                    d.getString("sodium_100g")));
+                                    d.getString("sodium_100g"),
+                                    d.getString("nutrition_grade_fr")));
                             e.printStackTrace();
                         }
                     }
@@ -174,11 +172,6 @@ public class SearchProductActivity extends Fragment {
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("search").commit();
 
-
-                    /*for(Prodotto p: listResult){
-                        System.out.println("LISTA"+p.toString());
-
-                    }*/
 
                     //after he logic is done, close the progress dialog
                     ringProgressDialog.dismiss();
