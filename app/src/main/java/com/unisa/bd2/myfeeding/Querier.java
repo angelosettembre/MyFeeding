@@ -40,7 +40,7 @@ public class Querier {
                         "brands", "ingredients_text", "image_ingredients_url", "allergens", "image_nutrion_url", "allergens",
                         "image_nutrion_url","energy_100g","fat_100g")));
         long count = collection.count(regexQuery);
-
+        /*
         if (count == 0) {
             Toast.makeText(currentContext.getApplicationContext(), "PRODOTTO NON TROVATO", Toast.LENGTH_SHORT).show();
 //            ringProgressDialog.dismiss();
@@ -84,6 +84,7 @@ public class Querier {
             th.start();
 
         }
+        */
         return true;
     }
 

@@ -35,10 +35,16 @@ public class Prodotto implements Parcelable {
     /*Traces*/
     String traces;
 
+    /*SERVING SIZE*/
+    String serving;
+
+    /*SATURATED FAT*/
+    String saturated_fat;
+
     public Prodotto() {
     }
 
-    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct, String quantity, String brand, String ingredients, String ingredientsImageUrl, String allergens, String imageNutritionUrl, String energy100, String fat100, String carbohydrates100, String sugars100, String fiber100, String proteins100, String salt100, String sodium100, String nutritionScore, String additives, String ingredientPalmOil, String traces) {
+    public Prodotto(long barcode, String productName, String imageUrl, String genericName, Bitmap imageProduct, String quantity, String brand, String ingredients, String ingredientsImageUrl, String allergens, String imageNutritionUrl, String energy100, String fat100, String carbohydrates100, String sugars100, String fiber100, String proteins100, String salt100, String sodium100, String nutritionScore, String additives, String ingredientPalmOil, String traces, String serving, String saturated_fat) {
         this.barcode = barcode;
         this.productName = productName;
         this.imageUrl = imageUrl;
@@ -62,6 +68,8 @@ public class Prodotto implements Parcelable {
         this.additives = additives;
         this.ingredientPalmOil = ingredientPalmOil;
         this.traces = traces;
+        this.serving = serving;
+        this.saturated_fat = saturated_fat;
     }
 
 
@@ -89,6 +97,8 @@ public class Prodotto implements Parcelable {
         additives = in.readString();
         ingredientPalmOil = in.readString();
         traces = in.readString();
+        serving = in.readString();
+        saturated_fat = in.readString();
     }
 
     public static final Creator<Prodotto> CREATOR = new Creator<Prodotto>() {
@@ -134,6 +144,8 @@ public class Prodotto implements Parcelable {
         dest.writeString(additives);
         dest.writeString(ingredientPalmOil);
         dest.writeString(traces);
+        dest.writeString(serving);
+        dest.writeString(saturated_fat);
     }
 
     public long getBarcode() {
@@ -320,6 +332,22 @@ public class Prodotto implements Parcelable {
         this.traces = traces;
     }
 
+    public String getServing() {
+        return serving;
+    }
+
+    public void setServing(String serving) {
+        this.serving = serving;
+    }
+
+    public String getSaturated_fat() {
+        return saturated_fat;
+    }
+
+    public void setSaturated_fat(String saturated_fat) {
+        this.saturated_fat = saturated_fat;
+    }
+
     @Override
     public String toString() {
         return "Prodotto{" +
@@ -346,6 +374,8 @@ public class Prodotto implements Parcelable {
                 ", additives='" + additives + '\'' +
                 ", ingredientPalmOil='" + ingredientPalmOil + '\'' +
                 ", traces='" + traces + '\'' +
+                ", serving='" + serving + '\'' +
+                ", saturated_fat='" + saturated_fat + '\'' +
                 '}';
     }
 }
