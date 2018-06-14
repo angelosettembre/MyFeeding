@@ -11,14 +11,14 @@ import org.bson.Document;
 public class ConnectionDB {
 
 
-    public static MongoCollection<Document> getConnection(){
+    public static MongoCollection<Document> getConnection() {
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        MongoClient mongoClient = new MongoClient("34.207.149.93",27017);
+        MongoClient mongoClient = new MongoClient("34.207.149.93", 27017);
 
         System.out.println("COLLEGATO ");
 
