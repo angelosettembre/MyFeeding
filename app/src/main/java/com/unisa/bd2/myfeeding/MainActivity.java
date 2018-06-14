@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 if(id == R.id.nav_search){
                     fragment = new SearchProductActivity();
                     FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("main").commit();
                     mDrawerLayout.closeDrawers();
                     return true;
                 }
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.nav_barcode) {
                     fragment = new BarcodeScannerActivity();
                     FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("main").commit();
                     // close drawer when item is tapped
                     mDrawerLayout.closeDrawers();
                     return true;

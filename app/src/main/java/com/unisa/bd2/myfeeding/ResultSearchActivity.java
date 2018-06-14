@@ -63,7 +63,7 @@ public class ResultSearchActivity extends Fragment {
 
                 Fragment fragment = new ProductDetails();
                 fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).commit();
+                getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("result").commit();
             }
         });
     }

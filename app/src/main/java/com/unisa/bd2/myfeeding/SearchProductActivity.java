@@ -116,10 +116,25 @@ public class SearchProductActivity extends Fragment {
                 public void run() {
                     for (Document d : result) {
                         try {
-                            listResult.add(new Prodotto(d.getLong("code"), d.getString("product_name")
-                                    , d.getString("image_url"), d.getString("generic_name"), downloadImage(d.getString("image_url")), d.getString("quantity"),
-                                    d.getString("brands"), d.getString("ingredients_text"),d.getString("image_ingredients_url"), d.getString("allergens"), d.getString("image_nutrition_url"), d.getString("energy_100g"),
-                                    d.getString("fat_100g"),d.getString("carbohydrates_100g"), d.getString("sugars_100g"), d.getString("fiber_100g") , d.getString("proteins_100g"), d.getString("salt_100g"), d.getString("sodium_100g")));
+                            listResult.add(new Prodotto(d.getLong("code"),
+                                    d.getString("product_name"),
+                                    d.getString("image_url"),
+                                    d.getString("generic_name"),
+                                    downloadImage(d.getString("image_url")),
+                                    d.getString("quantity"),
+                                    d.getString("brands"),
+                                    d.getString("ingredients_text"),
+                                    d.getString("image_ingredients_url"),
+                                    d.getString("allergens"),
+                                    d.getString("image_nutrition_url"),
+                                    d.getString("energy_100g"),
+                                    d.getString("fat_100g"),
+                                    d.getString("carbohydrates_100g"),
+                                    d.getString("sugars_100g"),
+                                    d.getString("fiber_100g") ,
+                                    d.getString("proteins_100g"),
+                                    d.getString("salt_100g"),
+                                    d.getString("sodium_100g")));
 
                             System.out.println("DOCUMENTOOO " + d.getLong("code") + " " + d.getString("product_name")
                                     + " " + d.getString("image_url") + " " + d.getString("generic_name"));
@@ -128,8 +143,10 @@ public class SearchProductActivity extends Fragment {
                         } catch (Exception e) {
                             icon = getResources().getDrawable(R.drawable.image_not_found);
                             Bitmap bitmap = ((BitmapDrawable)icon).getBitmap();
-                            listResult.add(new Prodotto(d.getLong("code"), d.getString("product_name")
-                                    , d.getString("image_url"), d.getString("generic_name"),
+                            listResult.add(new Prodotto(d.getLong("code"),
+                                    d.getString("product_name"),
+                                    d.getString("image_url"),
+                                    d.getString("generic_name"),
                                     ((BitmapDrawable) icon).getBitmap(),
                                     d.getString("quantity"),
                                     d.getString("brands"),
@@ -155,7 +172,7 @@ public class SearchProductActivity extends Fragment {
 
                     Fragment fragment = new ResultSearchActivity();
                     fragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).commit();
+                    getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("search").commit();
 
 
                     /*for(Prodotto p: listResult){
