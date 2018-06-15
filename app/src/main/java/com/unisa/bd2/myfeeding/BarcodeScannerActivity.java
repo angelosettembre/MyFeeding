@@ -147,6 +147,7 @@ public class BarcodeScannerActivity extends Fragment {
                                 Toast.makeText(getContext().getApplicationContext(), "Connessione DB", Toast.LENGTH_SHORT).show();
 
                                 long barcode = Long.valueOf(intentData).longValue();
+
                                 System.out.println("BARCOOOOOOOODEEE PARSED " + barcode);
 
                                 Prodotto pFound = Querier.queryTheDB(barcode, getContext(), getResources());
