@@ -1,7 +1,12 @@
 package com.unisa.bd2.myfeeding;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,8 +32,8 @@ public class SommarioFragment extends Fragment{
 
     View view;
     Prodotto prod;
-    Animation animZoomIn;
     private Animator mCurrentAnimatorEffect;
+    private int mShortAnimationDurationEffect;
 
 
     public SommarioFragment() {
@@ -59,33 +65,17 @@ public class SommarioFragment extends Fragment{
 
         imageProductView.setImageBitmap(prod.getImageProduct());
 
-        /*
-        // load the animation
-        animZoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
 
-        // set animation listener
-        animZoomIn.setAnimationListener(this);
-        */
 
-        /*
-        imageProductView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.startAnimation(animZoomIn);
-            }
-        });
-        */
-
-        /*
-        final View thumbImageView = view.findViewById(R.id.imageProduct);
+        final View thumbImageView = view.findViewById(R.id.imgProduct);
         thumbImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //zoomImageFromThumb(thumbImageView, R.drawable.cat);
+                zoomImageFromThumb(thumbImageView, prod.getImageProduct());
             }
         });
-        */
 
+        mShortAnimationDurationEffect = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 
 
@@ -127,24 +117,21 @@ public class SommarioFragment extends Fragment{
     }
 
 
-
-    /*
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
+    private void zoomImageFromThumb(final View thumbView, Bitmap imageResId) {
         if (mCurrentAnimatorEffect != null) {
             mCurrentAnimatorEffect.cancel();
         }
 
         final ImageView expandedImageView = (ImageView) view.findViewById(
                 R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        expandedImageView.setImageBitmap(imageResId);
 
         final Rect startBounds = new Rect();
         final Rect finalBounds = new Rect();
         final Point globalOffset = new Point();
 
         thumbView.getGlobalVisibleRect(startBounds);
-        findViewById(R.id.container)
-                .getGlobalVisibleRect(finalBounds, globalOffset);
+        view.findViewById(R.id.frame_layout).getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
 
@@ -174,8 +161,7 @@ public class SommarioFragment extends Fragment{
 
         // scale properties (X, Y, SCALE_X, and SCALE_Y).
         AnimatorSet set = new AnimatorSet();
-        set
-                .play(ObjectAnimator.ofFloat(expandedImageView, View.X,
+        set.play(ObjectAnimator.ofFloat(expandedImageView, View.X,
                         startBounds.left, finalBounds.left))
                 .with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
                         startBounds.top, finalBounds.top))
@@ -241,7 +227,7 @@ public class SommarioFragment extends Fragment{
             }
         });
     }
-    */
+
 
 
 

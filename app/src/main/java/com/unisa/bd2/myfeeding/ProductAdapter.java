@@ -45,25 +45,6 @@ public class ProductAdapter extends ArrayAdapter<Prodotto> {
         genericName.setText(p.getGenericName());
         image.setImageBitmap(p.getImageProduct());
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isImageFitToScreen) {
-                    isImageFitToScreen = false;
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
-                    image.setLayoutParams(params);
-                    image.setScaleType(ImageView.ScaleType.FIT_XY);
-                    image.setAdjustViewBounds(true);
-                } else {
-                    isImageFitToScreen = true;
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                    params.setMargins(0, 100, 0, 0);
-                    image.setLayoutParams(params);
-                    image.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
-            }
-        });
-
         return v;
     }
 }
