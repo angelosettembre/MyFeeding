@@ -79,7 +79,8 @@ public class Querier {
                             d.getString("ingredients_from_palm_oil_tags"),
                             d.getString("traces"),
                             d.getString("serving_size"),
-                            d.getString("saturated-fat_100g"));
+                            d.getString("saturated-fat_100g"),
+                            d.getString("cocoa_100g"));
                 } catch (Exception e) {
                     icon = currentResources.getDrawable(R.drawable.image_not_found);
                     prodottoFound = new Prodotto(d.getLong("code"),
@@ -106,7 +107,8 @@ public class Querier {
                             d.getString("ingredients_from_palm_oil_tags"),
                             d.getString("traces"),
                             d.getString("serving_size"),
-                            d.getString("saturated-fat_100g"));
+                            d.getString("saturated-fat_100g"),
+                            d.getString("cocoa_100g"));
                     e.printStackTrace();
                 }
             }
