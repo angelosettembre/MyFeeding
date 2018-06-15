@@ -385,46 +385,9 @@
                     android:background="@android:color/darker_gray"/>
 
                 <LinearLayout
-                    android:id="@+id/tenLinear"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@id/separator8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:id="@+id/minerali"
-                        android:text="Minerali"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/mineraliValue"
-                        android:layout_marginLeft="95dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-
-                    <TextView
-                        android:id="@+id/mineraliPortion"
-                        android:layout_marginLeft="92dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/separator9"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@id/tenLinear"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-
-                <LinearLayout
                     android:id="@+id/elevenLinear"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@id/separator9"
+                    android:layout_below="@id/separator8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
