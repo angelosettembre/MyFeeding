@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class TabellaFragment extends Fragment {
 
@@ -99,7 +100,6 @@ public class TabellaFragment extends Fragment {
 
         if(prod.getServing() != null){
             /*ENERGIA*/
-
             if(prod.getEnergy100() != null){
                 eneryCalculation = (int) calculateKcal(Integer.parseInt(prod.getEnergy100()));
                 String energyKCAL = eneryCalculation + " kcal";
@@ -110,7 +110,10 @@ public class TabellaFragment extends Fragment {
                     energyPortion.setText(String.valueOf(calculatePortionEnergy(Integer.parseInt(prod.getServing().replace(".","").substring(0,2)), eneryCalculation))+" kcal");
                 } else if(prod.getServing().contains(" g")){
                     energyPortion.setText(String.valueOf(calculatePortionEnergy(Integer.parseInt(prod.getServing().replace(" g","")), eneryCalculation))+" kcal");
-                } else {
+                } else if(prod.getServing().contains(" ml")){
+                    energyPortion.setText(String.valueOf(calculatePortionEnergy(Integer.parseInt(prod.getServing().replace(" ml","")), eneryCalculation))+" kcal");
+                }
+                else {
                     String s = prod.getServing().replace("g"," g");
                     energyPortion.setText(String.valueOf(calculatePortionEnergy(Integer.parseInt(s.replace(" g","")), eneryCalculation))+" kcal");
                 }
@@ -123,6 +126,8 @@ public class TabellaFragment extends Fragment {
                     grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".","").substring(0,2)),  Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2)))+ " g"));
                 } else if(prod.getServing().contains(" g")){
                     grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2)))+ " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2)))+ " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")),  Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2)))+ " g"));
@@ -136,6 +141,8 @@ public class TabellaFragment extends Fragment {
                             grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".","").substring(0,2)),  Double.parseDouble(prod.getFat100()))+ " g"));
                         } else if(prod.getServing().contains(" g")){
                             grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getFat100()))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getFat100()))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")),  Double.parseDouble(prod.getFat100()))+ " g"));
@@ -147,6 +154,8 @@ public class TabellaFragment extends Fragment {
                             grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".","").substring(0,2)),  Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(1)))+ " g"));
                         } else if(prod.getServing().contains(" g")){
                             grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")),  Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(1)))+ " g"));
@@ -162,6 +171,8 @@ public class TabellaFragment extends Fragment {
                     grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
                 } else if(prod.getServing().contains(" g")){
                     grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
@@ -175,6 +186,8 @@ public class TabellaFragment extends Fragment {
                             grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat())) + " g"));
                         } else if(prod.getServing().contains(" g")){
                             grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat())) + " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat())) + " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSaturated_fat())) + " g"));
@@ -189,6 +202,8 @@ public class TabellaFragment extends Fragment {
                         } else if(prod.getServing().contains(" g")){
                             System.out.println("SATURROOOOOO 3333");
                             grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             System.out.println("SATURROOOOOO");
@@ -205,6 +220,8 @@ public class TabellaFragment extends Fragment {
                     carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
                 } else if(prod.getServing().contains(" g")){
                     carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
@@ -218,6 +235,8 @@ public class TabellaFragment extends Fragment {
                             carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100())) + " g"));
                         } else if(prod.getServing().contains(" g")){
                             carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100())) + " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100())) + " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getCarbohydrates100())) + " g"));
@@ -231,6 +250,8 @@ public class TabellaFragment extends Fragment {
                         } else if(prod.getServing().contains(" g")){
                             System.out.println("SATURROOOOOO 3333");
                             carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             System.out.println("SATURROOOOOO");
@@ -247,6 +268,8 @@ public class TabellaFragment extends Fragment {
                     zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
                 } else if(prod.getServing().contains(" g")){
                     zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
@@ -260,6 +283,8 @@ public class TabellaFragment extends Fragment {
                             zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100())) + " g"));
                         } else if(prod.getServing().contains(" g")){
                             zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100())) + " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100())) + " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSugars100())) + " g"));
@@ -273,6 +298,8 @@ public class TabellaFragment extends Fragment {
                         } else if(prod.getServing().contains(" g")){
                             System.out.println("SATURROOOOOO 3333");
                             zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             System.out.println("SATURROOOOOO");
@@ -289,6 +316,8 @@ public class TabellaFragment extends Fragment {
                     proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
                 } else if(prod.getServing().contains(" g")){
                     proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
@@ -302,6 +331,8 @@ public class TabellaFragment extends Fragment {
                             proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100())) + " g"));
                         } else if(prod.getServing().contains(" g")){
                             proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100())) + " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100())) + " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getProteins100())) + " g"));
@@ -315,6 +346,8 @@ public class TabellaFragment extends Fragment {
                         } else if(prod.getServing().contains(" g")){
                             System.out.println("SATURROOOOOO 3333");
                             proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             System.out.println("SATURROOOOOO");
@@ -331,6 +364,8 @@ public class TabellaFragment extends Fragment {
                     sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
                 } else if(prod.getServing().contains(" g")){
                     sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
@@ -344,6 +379,8 @@ public class TabellaFragment extends Fragment {
                             sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100())) + " g"));
                         } else if(prod.getServing().contains(" g")){
                             sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100())) + " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100())) + " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSodium100())) + " g"));
@@ -357,6 +394,8 @@ public class TabellaFragment extends Fragment {
                         } else if(prod.getServing().contains(" g")){
                             System.out.println("SATURROOOOOO 3333");
                             sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             System.out.println("SATURROOOOOO");
@@ -373,6 +412,8 @@ public class TabellaFragment extends Fragment {
                     salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
                 } else if(prod.getServing().contains(" g")){
                     salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                } else if(prod.getServing().contains(" ml")){
+                    salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " ml"));
                 } else {
                     String s = prod.getServing().replace("g"," g");
                     salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
@@ -386,6 +427,8 @@ public class TabellaFragment extends Fragment {
                             salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100())) + " g"));
                         } else if(prod.getServing().contains(" g")){
                             salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100())) + " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100())) + " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getSalt100())) + " g"));
@@ -399,6 +442,8 @@ public class TabellaFragment extends Fragment {
                         } else if(prod.getServing().contains(" g")){
                             System.out.println("SATURROOOOOO 3333");
                             salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(1)))+ " g"));
+                        } else if(prod.getServing().contains(" ml")){
+                            salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(1)))+ " ml"));
                         } else {
                             String s = prod.getServing().replace("g"," g");
                             System.out.println("SATURROOOOOO");
@@ -416,6 +461,8 @@ public class TabellaFragment extends Fragment {
                         cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
                     } else if(prod.getServing().contains(" g")){
                         cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
+                    } else if(prod.getServing().contains(" ml")){
+                        cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " ml"));
                     } else {
                         String s = prod.getServing().replace("g"," g");
                         cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
@@ -429,6 +476,8 @@ public class TabellaFragment extends Fragment {
                                 cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao())) + " g"));
                             } else if(prod.getServing().contains(" g")){
                                 cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao())) + " g"));
+                            } else if(prod.getServing().contains(" ml")){
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao())) + " ml"));
                             } else {
                                 String s = prod.getServing().replace("g"," g");
                                 cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g","")), Double.parseDouble(prod.getCacao())) + " g"));
@@ -442,6 +491,8 @@ public class TabellaFragment extends Fragment {
                             } else if(prod.getServing().contains(" g")){
                                 System.out.println("SATURROOOOOO 3333");
                                 cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g","")),  Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1)))+ " g"));
+                            } else if(prod.getServing().contains(" ml")){
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml","")),  Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1)))+ " ml"));
                             } else {
                                 String s = prod.getServing().replace("g"," g");
                                 System.out.println("SATURROOOOOO");
@@ -452,6 +503,13 @@ public class TabellaFragment extends Fragment {
                 }
             }
         } else {
+            /*ENERGIA*/
+            if(prod.getEnergy100() != null){
+                eneryCalculation = (int) calculateKcal(Integer.parseInt(prod.getEnergy100()));
+                String energyKCAL = eneryCalculation + " kcal";
+
+                energyValue.setText(energyKCAL);
+            }
             /*GRASSI*/
             if(prod.getFat100() != null){
                 if (prod.getFat100().length() == 3) {
@@ -588,38 +646,38 @@ public class TabellaFragment extends Fragment {
         System.out.println("PORTION: "+portion);
         System.out.println("NUTRITIONAL VALUE: "+nutritionalValue);
 
-        DecimalFormat df = new DecimalFormat("#.#");
-        df.setRoundingMode(RoundingMode.FLOOR);
+        DecimalFormat df = new DecimalFormat("#0.00");
+        DecimalFormatSymbols dfs = df.getDecimalFormatSymbols();
+
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
 
         double rapp = portionG / portion;
-        double nut = nutritionalValue / new Double(df.format(rapp));
+        double nut = (nutritionalValue / Double.parseDouble(df.format(rapp)));
         System.out.println("RAPP: "+nut);
 
-        DecimalFormat df2 = new DecimalFormat("#.##");
-        df2.setRoundingMode(RoundingMode.FLOOR);
+        double result = (Double.parseDouble(df.format((nut))) * 0.100);
 
-
-        double result = new Double(df2.format(nut)) * 0.100;
         System.out.println("RESULT: "+result);
 
-        return result;
+        return Double.parseDouble(df.format(result));
     }
 
     public double calculatePortionForTwo(int portion, double nutritionalValue){
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.FLOOR);
+        DecimalFormat df = new DecimalFormat("#0.00");
+        DecimalFormatSymbols dfs = df.getDecimalFormatSymbols();
+
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
 
         double rapp = portionG / portion;
-        double nut = nutritionalValue / new Double(df.format(rapp));
+        double nut = (nutritionalValue / Double.parseDouble(df.format(rapp)));
         System.out.println("RAPP: "+nut);
 
-        DecimalFormat df2 = new DecimalFormat("#.#");
-        df2.setRoundingMode(RoundingMode.FLOOR);
+        double result = (Double.parseDouble(df.format((nut))) * 1.0);
 
-
-        double result = new Double(df2.format(nut)) * 1.0;
         System.out.println("RESULT: "+result);
 
-        return result;
+        return Double.parseDouble(df.format(result));
     }
 }
