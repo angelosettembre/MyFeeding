@@ -28,7 +28,7 @@ public class ProductDetails extends Fragment {
         }
 
         prod = getArguments().getParcelable("prodotto");
-        System.out.println("PRODOTTO;;; "+prod.toString());
+        System.out.println("PRODUCT DETAILS!!!!!!!!!!! PRODOTTO: "+prod.toString());
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);

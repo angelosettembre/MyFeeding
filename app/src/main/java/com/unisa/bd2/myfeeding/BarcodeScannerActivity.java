@@ -19,12 +19,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+
+import org.bson.Document;
 
 import java.io.IOException;
+
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.in;
 
 public class BarcodeScannerActivity extends Fragment {
 
@@ -36,6 +46,7 @@ public class BarcodeScannerActivity extends Fragment {
     Button btnAction;
     String intentData = "";
     boolean isEmail = false;
+    static boolean running = false;
 
     @Nullable
     @Override
@@ -50,6 +61,7 @@ public class BarcodeScannerActivity extends Fragment {
         surfaceView = view.findViewById(R.id.surfaceView);
         btnAction = view.findViewById(R.id.btnAction);
         initViews();
+        running = false;
     }
 
     private void initViews() {
@@ -114,6 +126,7 @@ public class BarcodeScannerActivity extends Fragment {
             @Override
             public void release() {
                 Toast.makeText(getContext().getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -126,14 +139,32 @@ public class BarcodeScannerActivity extends Fragment {
 
                         @Override
                         public void run() {
-                            btnAction.setText("LAUNCH URL");
-                            intentData = barcodes.valueAt(0).displayValue;
-                            txtBarcodeValue.setText(intentData);
-                            Toast.makeText(getContext().getApplicationContext(), "Connessione DB", Toast.LENGTH_SHORT).show();
-                            Querier.queryTheDB(intentData, getContext(), getResources());
+                            if (running == false) {
+                                btnAction.setText("LAUNCH URL");
+                                intentData = barcodes.valueAt(0).displayValue;
+                                txtBarcodeValue.setText(intentData);
+                                System.out.println("BARCOOODEE LETTOOOO " + intentData);
+                                Toast.makeText(getContext().getApplicationContext(), "Connessione DB", Toast.LENGTH_SHORT).show();
 
+                                long barcode = Long.valueOf(intentData).longValue();
+                                System.out.println("BARCOOOOOOOODEEE PARSED " + barcode);
+
+                                Prodotto pFound = Querier.queryTheDB(barcode, getContext(), getResources());
+
+                                System.out.println("Pfound " + pFound);
+                                if (!pFound.getProductName().equals("")) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("prodotto", pFound);
+
+                                    Fragment fragment = new ProductDetails();
+                                    fragment.setArguments(bundle);
+                                    getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("main").commit();
+                                    running = true;
+                                }
+                            }
                         }
                     });
+
 
                 }
             }
