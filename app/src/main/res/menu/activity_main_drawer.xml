@@ -11,12 +11,8 @@
             android:icon="@drawable/ic_menu_search"
             android:title="@string/search" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@mipmap/ic_menu_slideshow"
-            android:title="@string/slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@mipmap/ic_menu_manage"
-            android:title="@string/tools" />
+            android:id="@+id/nav_allergens"
+            android:icon="@mipmap/allergens"
+            android:title="@string/allergens" />
     </group>
 </menu>

@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
                     mDrawerLayout.closeDrawers();
                     return true;
                 }
+                if(id == R.id.nav_allergens){
+                    fragment = new AllergensList();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("main").commit();
+                    mDrawerLayout.closeDrawers();
+                    return true;
+                }
 
                 if (id == R.id.nav_barcode) {
                     fragment = new BarcodeScannerActivity();

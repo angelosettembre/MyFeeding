@@ -1,17 +1,13 @@
 package com.unisa.bd2.myfeeding;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,22 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-
-import static com.mongodb.client.model.Projections.*;
-import static com.mongodb.client.model.Filters.*;
 
 import org.bson.Document;
 
-import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 public class SearchProductActivity extends Fragment {
 
