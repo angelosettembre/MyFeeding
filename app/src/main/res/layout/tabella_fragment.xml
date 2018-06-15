@@ -3,19 +3,456 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/firsRelative"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="TABELLA NUTRIZIONALE"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/nutritionImage"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp" />
+
+            <TextView
+                android:id="@+id/portion"
+                android:layout_below="@id/nutritionImage"
+                android:layout_centerHorizontal="true"
+                android:text="Per porzione: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:id="@+id/portionText"
+                android:layout_toRightOf="@id/portion"
+                android:layout_below="@id/nutritionImage"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/secondRelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nutritionImage"
+                android:layout_margin="30dp">
+
+                <LinearLayout
+                    android:id="@+id/firsLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                   <TextView
+                       android:id="@+id/infoNut"
+                       android:text="Informazioni\nnutrizionali"
+                       android:textStyle="bold"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/perQuantity"
+                        android:layout_marginLeft="60dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Per 100g"
+                        />
+
+                    <TextView
+                        android:id="@+id/perPortion"
+                        android:layout_marginLeft="60dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Per porzione"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/firsLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/secondLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/energy"
+                        android:text="Energia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/energyVal"
+                        android:layout_marginLeft="100dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/energyPortion"
+                        android:layout_marginLeft="90dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator1"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/secondLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/thirdLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/grass"
+                        android:text="Grasso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/grassValue"
+                        android:layout_marginLeft="102dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/grassPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator2"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/thirdLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/fourLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/grassSaturi"
+                        android:text="Grassi Saturi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/grassSaturiValue"
+                        android:layout_marginLeft="67dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/grassSaturiPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator3"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/fourLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/fiveLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/carboidrato"
+                        android:text="Carboidrato"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/carboidratoValue"
+                        android:layout_marginLeft="72dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/carboidratoPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator4"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/fiveLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/sixLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/zuccheri"
+                        android:text="Zuccheri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/zuccheriValue"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/zuccheriPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator5"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/sixLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/sevenLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/proteine"
+                        android:text="Proteine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/proteineValue"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/proteinePortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator6"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/sevenLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/eightLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/sodio"
+                        android:text="Sodio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/sodioValue"
+                        android:layout_marginLeft="108dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/sodioPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator7"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/eightLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/nineLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/sale"
+                        android:text="Sale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/saleValue"
+                        android:layout_marginLeft="118dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/salePortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator8"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/nineLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/tenLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/minerali"
+                        android:text="Minerali"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/mineraliValue"
+                        android:layout_marginLeft="95dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/mineraliPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator9"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/tenLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/elevenLinear"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/separator9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/cacao"
+                        android:text="Cacao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/cacaoValue"
+                        android:layout_marginLeft="104dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/cacaoPortion"
+                        android:layout_marginLeft="92dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -3,17 +3,140 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/firsRelative"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="INGREDIENTI"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </RelativeLayout>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ingredientsImage"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp" />
+
+            <RelativeLayout
+                android:id="@+id/secondRelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ingredientsImage"
+                android:layout_margin="30dp">
+
+                <LinearLayout
+                    android:id="@+id/firsLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/customborder">
+
+                    <TextView
+                        android:id="@+id/list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lista ingredienti: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_Ingredients"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/list" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/secondLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/firsLinear"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/customborder"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sostanze"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sostanze o prodotti che causano allergie o intolleranze: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_Sostanze"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/thirdLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/secondLinear"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/customborder">
+
+                    <TextView
+                        android:id="@+id/additivi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Additivi: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_Additivi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fourLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/thirdLinear"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/customborder"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/olio_palma"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ingredienti derivanti dall'olio di palma: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/list_Olio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fiveLinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fourLinear"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/customborder">
+
+                    <TextView
+                        android:id="@+id/traces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tracce: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/traces_List"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
