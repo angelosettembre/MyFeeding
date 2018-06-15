@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -129,9 +130,16 @@ public class BarcodeScannerActivity extends Fragment {
                             btnAction.setText("LAUNCH URL");
                             intentData = barcodes.valueAt(0).displayValue;
                             txtBarcodeValue.setText(intentData);
+                            System.out.println("Intent data " + intentData);
                             Toast.makeText(getContext().getApplicationContext(), "Connessione DB", Toast.LENGTH_SHORT).show();
-                            Querier.queryTheDB(intentData, getContext(), getResources());
+                            Prodotto pFound = Querier.queryTheDB(intentData, getContext(), getResources());
+                            System.out.println("Pfound " + pFound);
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("prodotto", pFound);
 
+                            Fragment fragment = new ProductDetails();
+                            fragment.setArguments(bundle);
+                            getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("main").commit();
                         }
                     });
 
