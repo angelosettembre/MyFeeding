@@ -1,7 +1,13 @@
 package com.unisa.bd2.myfeeding;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -9,6 +15,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +41,9 @@ public class IngredientiFragment extends Fragment {
 
     Prodotto prod;
     Drawable icon;
+    private Animator mCurrentAnimatorEffect;
+    private int mShortAnimationDurationEffect;
+    Bitmap image;
 
 
     public IngredientiFragment() {
@@ -66,14 +76,28 @@ public class IngredientiFragment extends Fragment {
 
         System.out.println("INGREDIENTI FRAGMENTTT prod "+prod.toString());
 
+
         try {
-            ingredientsImage.setImageBitmap(downloadImage(prod.getIngredientsImageUrl()));
+            image = downloadImage(prod.getIngredientsImageUrl());
+            ingredientsImage.setImageBitmap(image);
         } catch (Exception e) {
             icon = getResources().getDrawable(R.drawable.image_not_found);
             Bitmap bitmap = ((BitmapDrawable)icon).getBitmap();
+            image = ((BitmapDrawable) icon).getBitmap();
             ingredientsImage.setImageBitmap(((BitmapDrawable) icon).getBitmap());
             e.printStackTrace();
         }
+
+        final View thumbImageView = view.findViewById(R.id.ingredientsImage);
+        thumbImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomImageFromThumb(thumbImageView, image);
+            }
+        });
+
+        mShortAnimationDurationEffect = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
 
         if(prod.getIngredients() == null){
             fisrtLinear.setVisibility(LinearLayout.GONE);
@@ -108,5 +132,116 @@ public class IngredientiFragment extends Fragment {
         URL newurl = new URL(imageURL);
         Bitmap logo = BitmapFactory.decodeStream(newurl.openConnection().getInputStream());
         return logo;
+    }
+
+    private void zoomImageFromThumb(final View thumbView, Bitmap imageResId) {
+        if (mCurrentAnimatorEffect != null) {
+            mCurrentAnimatorEffect.cancel();
+        }
+
+        final ImageView expandedImageView = (ImageView) view.findViewById(
+                R.id.expanded_image);
+        expandedImageView.setImageBitmap(imageResId);
+
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        thumbView.getGlobalVisibleRect(startBounds);
+        view.findViewById(R.id.frame_layout).getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        thumbView.setAlpha(0f);
+        expandedImageView.setVisibility(View.VISIBLE);
+
+        expandedImageView.setPivotX(0f);
+        expandedImageView.setPivotY(0f);
+
+        // scale properties (X, Y, SCALE_X, and SCALE_Y).
+        AnimatorSet set = new AnimatorSet();
+        set.play(ObjectAnimator.ofFloat(expandedImageView, View.X,
+                startBounds.left, finalBounds.left))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
+                        startBounds.top, finalBounds.top))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X,
+                        startScale, 1f)).with(ObjectAnimator.ofFloat(expandedImageView,
+                View.SCALE_Y, startScale, 1f));
+        set.setDuration(mShortAnimationDurationEffect);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mCurrentAnimatorEffect = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                mCurrentAnimatorEffect = null;
+            }
+        });
+        set.start();
+        mCurrentAnimatorEffect = set;
+
+        final float startScaleFinal = startScale;
+        expandedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCurrentAnimatorEffect != null) {
+                    mCurrentAnimatorEffect.cancel();
+                }
+
+                // back to their original values.
+                AnimatorSet set = new AnimatorSet();
+                set.play(ObjectAnimator
+                        .ofFloat(expandedImageView, View.X, startBounds.left))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView,
+                                        View.Y,startBounds.top))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView,
+                                        View.SCALE_X, startScaleFinal))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView,
+                                        View.SCALE_Y, startScaleFinal));
+                set.setDuration(mShortAnimationDurationEffect);
+                set.setInterpolator(new DecelerateInterpolator());
+                set.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        thumbView.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        mCurrentAnimatorEffect = null;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        thumbView.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        mCurrentAnimatorEffect = null;
+                    }
+                });
+                set.start();
+                mCurrentAnimatorEffect = set;
+            }
+        });
     }
 }
