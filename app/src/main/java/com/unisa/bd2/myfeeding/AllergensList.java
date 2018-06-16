@@ -78,6 +78,10 @@ public class AllergensList extends Fragment {
         bah = new ArrayList<>();
         // specify an adapter (see also next example)
         Set<String> preferencesStored = AllergensPersistence.loadPreferences();
+
+        System.out.println("PREFERENCES STOREEEDD"+preferencesStored);
+
+
         if (preferencesStored != null) {
             bah.addAll(preferencesStored);
         }

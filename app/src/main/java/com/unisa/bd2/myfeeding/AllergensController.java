@@ -4,47 +4,51 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.text.Layout;
 import android.view.View;
 
+import java.net.StandardSocketOptions;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AllergensController {
-    static String[] lattosio = {"milk", "lactose", "butter", "beurre", "lait", "lactose", "Laktose ", "Milch", "Butter", "lactosérum", "Magermilchpulver", "Süßmolkenpulver", "Yaourt", "cream", "latte", "burro"};
+    static String[] lattosio = {"milk", "lactose", "butter","lattosio","beurre", "lait", "lactose", "Laktose ", "Milch", "Butter", "lactosérum", "Magermilchpulver", "Süßmolkenpulver", "Yaourt", "cream", "latte","Latte","LATTE", "burro"};
     static String[] soia = {"soje", "soia", "soja"};
-    static String[] glutine = {"Weizenmalz", "Gerstenmalz", "cebada", "glúten", "trigo", "orge", "frumento", "farro", "grano", "orzo", "avena", "segale"};
+    static String[] glutine = {"Weizenmalz","glutine", "Gerstenmalz", "cebada", "glúten", "trigo", "orge", "frumento", "farro", "grano", "orzo", "avena", "segale"};
     static String[] arachidi = {"Haselnüsse", "nocciole", "nocciola", "arachidi", "noisettes"};
     static private Set<String> allergens;
-    static private Set<String> problemFound = new HashSet<>();
+    static private Set<String> problemFound ;
     static View view;
     static Context context;
 
     public static void checkProduct(Context contextPassed, String allergensOfProduct) {
         allergens = AllergensPersistence.loadPreferences();
+
         context = contextPassed;
         if (allergens != null && allergensOfProduct != null) {
+            problemFound = new HashSet<>();
             for (String a : allergens) {
-                if (a == "Lattosio") {
+                if (a.equals("Lattosio")) {
                     for (String item : lattosio) {
                         if (allergensOfProduct.contains(item)) {
                             problemFound.add("Lattosio");
                         }
                     }
-                } else if (a == "Soia") {
+                } else if (a.equals("Soia")) {
                     for (String item : soia) {
                         if (allergensOfProduct.contains(item)) {
                             problemFound.add("Soia");
                         }
                     }
-                } else if (a == "Glutine") {
+                } else if (a.equals("Glutine")) {
                     for (String item : glutine) {
                         if (allergensOfProduct.contains(item)) {
                             problemFound.add("Glutine");
                         }
                     }
-                } else if (a == "Arachidi") {
+                } else if (a.equals("Arachidi")) {
                     for (String item : arachidi) {
                         if (allergensOfProduct.contains(item)) {
                             problemFound.add("Arachidi");
@@ -53,6 +57,7 @@ public class AllergensController {
                 } else {
                 }
             }
+
             if (problemFound.isEmpty() == false) {
                 launchAlert(problemFound);
             }
