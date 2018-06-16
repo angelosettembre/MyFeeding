@@ -24,7 +24,7 @@ public class AllergensController {
     public static void checkProduct(Context contextPassed, String allergensOfProduct) {
         allergens = AllergensPersistence.loadPreferences();
         context = contextPassed;
-        if (allergens != null || allergensOfProduct == "") {
+        if (allergens != null && allergensOfProduct == "" && allergensOfProduct != null) {
             for (String a : allergens) {
                 if (a == "Lattosio") {
                     for (String item : lattosio) {
