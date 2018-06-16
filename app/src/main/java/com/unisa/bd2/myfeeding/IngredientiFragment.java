@@ -11,6 +11,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +76,7 @@ public class IngredientiFragment extends Fragment {
 
         prod = getArguments().getParcelable("prodotto");
 
-        System.out.println("INGREDIENTI FRAGMENTTT prod "+prod.toString());
+        System.out.println("INGREDIENTI FRAGMENTTT prod " + prod.toString());
 
 
         try {
@@ -82,7 +84,7 @@ public class IngredientiFragment extends Fragment {
             ingredientsImage.setImageBitmap(image);
         } catch (Exception e) {
             icon = getResources().getDrawable(R.drawable.image_not_found);
-            Bitmap bitmap = ((BitmapDrawable)icon).getBitmap();
+            Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
             image = ((BitmapDrawable) icon).getBitmap();
             ingredientsImage.setImageBitmap(((BitmapDrawable) icon).getBitmap());
             e.printStackTrace();
@@ -99,33 +101,39 @@ public class IngredientiFragment extends Fragment {
         mShortAnimationDurationEffect = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 
-        if(prod.getIngredients() == null){
+        if (prod.getIngredients() == null) {
             fisrtLinear.setVisibility(LinearLayout.GONE);
         } else {
             ingredientsList.setText(prod.getIngredients());
         }
-        if(prod.getAllergens() == null){
+        if (prod.getAllergens() == null) {
             secondLinear.setVisibility(LinearLayout.GONE);
         } else {
             sostanzeList.setText(prod.getAllergens());
         }
-        if(prod.getAdditives() == null){
+        if (prod.getAdditives() == null) {
             thirdLinear.setVisibility(LinearLayout.GONE);
         } else {
             additiviList.setText(prod.getAdditives());
         }
-        if(prod.getIngredientPalmOil() == null){
+        if (prod.getIngredientPalmOil() == null) {
             fourLinear.setVisibility(LinearLayout.GONE);
         } else {
             olioList.setText(prod.getIngredientPalmOil());
         }
-        if(prod.getTraces() == null){
+        if (prod.getTraces() == null) {
             fiveLinear.setVisibility(LinearLayout.GONE);
         } else {
             tracesList.setText(prod.getTraces());
         }
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        AllergensController.checkProduct(getContext(), prod.getAllergens());
     }
 
     public Bitmap downloadImage(String imageURL) throws Exception {
@@ -215,7 +223,7 @@ public class IngredientiFragment extends Fragment {
                         .ofFloat(expandedImageView, View.X, startBounds.left))
                         .with(ObjectAnimator
                                 .ofFloat(expandedImageView,
-                                        View.Y,startBounds.top))
+                                        View.Y, startBounds.top))
                         .with(ObjectAnimator
                                 .ofFloat(expandedImageView,
                                         View.SCALE_X, startScaleFinal))

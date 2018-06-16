@@ -45,7 +45,7 @@ public class AllergensList extends Fragment {
                 AlertDialog.Builder b = new AlertDialog.Builder(getContext());
                 b.setTitle("Aggiungi Allergene");
                 final Set<String> choices = new HashSet<>();
-                choices.addAll(Arrays.asList("Lattosio", "Glutine", "Soia", "Crostacei"));
+                choices.addAll(Arrays.asList("Lattosio", "Glutine", "Soia", "Arachidi"));
                 if (AllergensPersistence.getSize() != 0) {
                     choices.removeAll(AllergensPersistence.loadPreferences());
                 }
