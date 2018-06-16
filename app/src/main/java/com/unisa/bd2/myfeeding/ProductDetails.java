@@ -1,9 +1,9 @@
 package com.unisa.bd2.myfeeding;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,19 +19,18 @@ public class ProductDetails extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if(view==null) {
-            view = inflater.inflate(R.layout.app_detail_product, container,false);
-        }
-        else {
+        if (view == null) {
+            view = inflater.inflate(R.layout.app_detail_product, container, false);
+        } else {
             ViewGroup parent = (ViewGroup) view.getParent();
             parent.removeView(view);
         }
 
         prod = getArguments().getParcelable("prodotto");
-        System.out.println("PRODUCT DETAILS!!!!!!!!!!! PRODOTTO: "+prod.toString());
+        System.out.println("PRODUCT DETAILS!!!!!!!!!!! PRODOTTO: " + prod.toString());
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("SOMMARIO"));
@@ -43,11 +42,10 @@ public class ProductDetails extends Fragment {
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
 
         final PagerAdapter adapter = new PagerAdapter
-                (getFragmentManager(), tabLayout.getTabCount(),prod);
+                (getFragmentManager(), tabLayout.getTabCount(), prod);
 
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
 
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -70,7 +68,6 @@ public class ProductDetails extends Fragment {
 
         return view;
     }
-
 
 
     @Override

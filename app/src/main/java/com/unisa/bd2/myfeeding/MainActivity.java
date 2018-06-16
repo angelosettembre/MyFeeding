@@ -1,7 +1,7 @@
 package com.unisa.bd2.myfeeding;
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,19 +12,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+    private static Context mContext;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getApplicationContext();
+        AllergensPersistence.initContext(mContext);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -46,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 // For example, swap UI fragments here
                 int id = item.getItemId();
 
-                if(id == R.id.nav_search){
+                if (id == R.id.nav_search) {
                     fragment = new SearchProductActivity();
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("main").commit();
                     mDrawerLayout.closeDrawers();
                     return true;
                 }
-                if(id == R.id.nav_allergens){
+                if (id == R.id.nav_allergens) {
                     fragment = new AllergensList();
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("main").commit();
