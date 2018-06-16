@@ -24,36 +24,38 @@ public class AllergensController {
     public static void checkProduct(Context contextPassed, String allergensOfProduct) {
         allergens = AllergensPersistence.loadPreferences();
         context = contextPassed;
-        for (String a : allergens) {
-            if (a == "Lattosio") {
-                for (String item : lattosio) {
-                    if (allergensOfProduct.contains(item)) {
-                        problemFound.add("Lattosio");
+        if (allergens != null || allergensOfProduct == "") {
+            for (String a : allergens) {
+                if (a == "Lattosio") {
+                    for (String item : lattosio) {
+                        if (allergensOfProduct.contains(item)) {
+                            problemFound.add("Lattosio");
+                        }
                     }
-                }
-            } else if (a == "Soia") {
-                for (String item : soia) {
-                    if (allergensOfProduct.contains(item)) {
-                        problemFound.add("Soia");
+                } else if (a == "Soia") {
+                    for (String item : soia) {
+                        if (allergensOfProduct.contains(item)) {
+                            problemFound.add("Soia");
+                        }
                     }
-                }
-            } else if (a == "Glutine") {
-                for (String item : glutine) {
-                    if (allergensOfProduct.contains(item)) {
-                        problemFound.add("Glutine");
+                } else if (a == "Glutine") {
+                    for (String item : glutine) {
+                        if (allergensOfProduct.contains(item)) {
+                            problemFound.add("Glutine");
+                        }
                     }
-                }
-            } else if (a == "Arachidi") {
-                for (String item : arachidi) {
-                    if (allergensOfProduct.contains(item)) {
-                        problemFound.add("Arachidi");
+                } else if (a == "Arachidi") {
+                    for (String item : arachidi) {
+                        if (allergensOfProduct.contains(item)) {
+                            problemFound.add("Arachidi");
+                        }
                     }
+                } else {
                 }
-            } else {
             }
-        }
-        if (problemFound.isEmpty() == false) {
-            launchAlert(problemFound);
+            if (problemFound.isEmpty() == false) {
+                launchAlert(problemFound);
+            }
         }
     }
 
