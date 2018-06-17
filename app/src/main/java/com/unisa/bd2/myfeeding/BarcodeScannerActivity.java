@@ -73,7 +73,6 @@ public class BarcodeScannerActivity extends Fragment {
 
     private void initialiseDetectorsAndSources() {
 
-        Toast.makeText(getContext().getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
         barcodeDetector = new BarcodeDetector.Builder(getContext())
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -116,7 +115,6 @@ public class BarcodeScannerActivity extends Fragment {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getContext().getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -135,7 +133,6 @@ public class BarcodeScannerActivity extends Fragment {
                                 intentData = barcodes.valueAt(0).displayValue;
                                 txtBarcodeValue.setText(intentData);
                                 System.out.println("BARCOOODEE LETTOOOO " + intentData);
-                                Toast.makeText(getContext().getApplicationContext(), "Connessione DB", Toast.LENGTH_SHORT).show();
 
                                 long barcode = Long.valueOf(intentData).longValue();
 
