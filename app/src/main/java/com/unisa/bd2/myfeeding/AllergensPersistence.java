@@ -16,18 +16,29 @@ public class AllergensPersistence {
     private static Set<String> tempSet;
     private static final String PREF_SEARCH_QUERY = "allergerns_preferences";
     private static Context context;
+    static SharedPreferences preferences;
+    static SharedPreferences.Editor editor;
 
     public static void initContext(Context myContext) {
+
         context = myContext;
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static Set<String> loadPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREF_SEARCH_QUERY, null);
+
+        Set<String> someSets = preferences.getStringSet(PREF_SEARCH_QUERY,new HashSet<String>());
+
+        return new HashSet<>(someSets);
     }
 
+
     private static void savePreferences(Set<String> query) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().clear();
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(PREF_SEARCH_QUERY, query).commit();
+        editor = preferences.edit();
+
+        editor.putStringSet(PREF_SEARCH_QUERY,query);
+        editor.commit();
     }
 
     public static boolean removeElement(String s) {
@@ -49,6 +60,7 @@ public class AllergensPersistence {
         if (tempSet.contains(s)) {
             return false;
         } else {
+            System.out.println("ELSEEEEEEEEE");
             tempSet.add(s);
             savePreferences(tempSet);
             return true;
