@@ -1,12 +1,15 @@
 package com.unisa.bd2.myfeeding;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -27,16 +32,21 @@ import org.bson.Document;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SearchProductActivity extends Fragment {
 
     EditText product;
     Button searchBtn;
+    FloatingActionButton advancedbtn;
     ArrayList<Prodotto> listResult;
     Drawable icon;
     String prod;
     FindIterable<Document> result;
     MongoCollection<Document> collection;
+    String[] items = {"Latte", "Glutine", "Soia", "Arachidi"};
+    List<Integer> selectedItems = new ArrayList<>();
 
     @Nullable
     @Override
@@ -50,15 +60,15 @@ public class SearchProductActivity extends Fragment {
         product = view.findViewById(R.id.search_bar);
         searchBtn = view.findViewById(R.id.search_btn);
         collection = ConnectionDB.getConnection();
-
+        advancedbtn = view.findViewById(R.id.fab_advanced_search);
 
         product.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                    InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    doSearch();
+                    doSearch(false);
                     return true;
                 }
                 return false;
@@ -68,27 +78,52 @@ public class SearchProductActivity extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doSearch();
+                doSearch(false);
+            }
+        });
+
+        advancedbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean[] checkedItems = {false, false, false, false};
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                        if (isChecked) {
+                            selectedItems.add(indexSelected);
+                        } else if (selectedItems.contains(indexSelected)) {
+                            selectedItems.remove(Integer.valueOf(indexSelected));
+                        }
+                    }
+                }).setTitle("Ricerca per allergene").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        doSearch(true);
+                    }
+                }).show();
             }
         });
     }
 
-    public void doSearch(){
+    public void doSearch(boolean advanced) {
+        long count;
         listResult = new ArrayList<>();
         prod = product.getText().toString();
 
-        if(prod.matches("[a-zA-Z]+") || prod.matches("[0-9]+")) {
+        if (prod.matches("[a-zA-Z]+") || prod.matches("[0-9]+") || advanced) {
             final ProgressDialog ringProgressDialog = ProgressDialog.show(getActivity(), "",
                     "Caricamento. Attendere...", true);
 
             BasicDBObject regexQuery = new BasicDBObject();
-            regexQuery.put("product_name", new BasicDBObject("$regex", prod).append("$options", "i"));
-
-            //result = collection.find(regexQuery)
-            //        .projection(fields(include("code", "product_name", "generic_name", "image_url")));
+            if (!advanced) {
+                regexQuery.put("product_name", new BasicDBObject("$regex", prod).append("$options", "i"));
+            } else {
+                regexQuery.put("allergens", new BasicDBObject("$regex", generateSearchString()).append("$options", "i"));
+            }
 
             result = collection.find(regexQuery);
-            long count = collection.count(regexQuery);
+            count = collection.count(regexQuery);
 
             if (count == 0) {
                 Toast.makeText(getContext().getApplicationContext(), "PRODOTTO NON TROVATO", Toast.LENGTH_SHORT).show();
@@ -180,6 +215,34 @@ public class SearchProductActivity extends Fragment {
                 th.start();
             }
         }
+    }
+
+    private String generateSearchString() {
+        String searchString = "";
+        for (Integer i : selectedItems) {
+            if (items[i].equals("Glutine")) {
+                searchString += Arrays.toString(AllergensController.glutine).replace("[", "")
+                        .replace("]", "")
+                        .replace(",", "|") + "|";
+            } else if (items[i].equals("Latte")) {
+                searchString += Arrays.toString(AllergensController.lattosio).replace("[", "")
+                        .replace("]", "")
+                        .replace(",", "|") + "|";
+            } else if (items[i].equals("Arachidi")) {
+                searchString += Arrays.toString(AllergensController.arachidi).replace("[", "")
+                        .replace("]", "")
+                        .replace(",", "|") + "|";
+            } else if (items[i].equals("Soia")) {
+                searchString += Arrays.toString(AllergensController.soia).replace("[", "")
+                        .replace("]", "")
+                        .replace(",", "|") + "|";
+            } else {
+            }
+
+        }
+        searchString = searchString.substring(0, searchString.length() - 1).replace(" ", "");
+        System.out.println("SEARCH_STRING " + searchString);
+        return searchString;
     }
 
     public Bitmap downloadImage(String imageURL) throws Exception {

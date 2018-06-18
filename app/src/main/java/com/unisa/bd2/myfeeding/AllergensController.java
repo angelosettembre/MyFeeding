@@ -14,12 +14,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AllergensController {
-    static String[] lattosio = {"milk", "lactose", "butter","lattosio","beurre", "lait", "lactose", "Laktose ", "Milch", "Butter", "lactosérum", "Magermilchpulver", "Süßmolkenpulver", "Yaourt", "cream", "latte","Latte","LATTE", "burro"};
-    static String[] soia = {"soje", "soia", "soja"};
-    static String[] glutine = {"Weizenmalz","glutine", "Gerstenmalz", "cebada", "glúten", "trigo", "orge", "frumento", "farro", "grano", "orzo", "avena", "segale"};
-    static String[] arachidi = {"Haselnüsse", "nocciole", "nocciola", "arachidi", "noisettes"};
+    public static String[] lattosio = {"milk", "lactose", "butter", "lattosio", "beurre", "lait", "lactose", "Laktose ", "Milch", "Butter", "lactosérum", "Magermilchpulver", "Süßmolkenpulver", "Yaourt", "cream", "latte", "Latte", "LATTE", "burro"};
+    public static String[] soia = {"soje", "soia", "soja"};
+    public static String[] glutine = {"Weizenmalz", "glutine", "Gerstenmalz", "cebada", "glúten", "trigo", "orge", "frumento", "farro", "grano", "orzo", "avena", "segale"};
+    public static String[] arachidi = {"Haselnüsse", "nocciole", "nocciola", "arachidi", "noisettes"};
     static private Set<String> allergens;
-    static private Set<String> problemFound ;
+    static private Set<String> problemFound;
     static View view;
     static Context context;
 
@@ -82,4 +82,5 @@ public class AllergensController {
                 .show();
 
     }
+
 }

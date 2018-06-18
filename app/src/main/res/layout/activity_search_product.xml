@@ -31,5 +31,13 @@
         android:textSize="20dp"/>
 
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_advanced_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/search_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:src="@mipmap/ic_dialog_advanced_search" />
 </RelativeLayout>
