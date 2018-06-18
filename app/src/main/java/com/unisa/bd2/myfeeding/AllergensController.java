@@ -4,12 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
-import android.text.Layout;
 import android.view.View;
 
-import java.net.StandardSocketOptions;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,25 +30,25 @@ public class AllergensController {
             for (String a : allergens) {
                 if (a.equals("Lattosio")) {
                     for (String item : lattosio) {
-                        if (allergensOfProduct.contains(item)) {
+                        if (StringUtils.containsIgnoreCase(allergensOfProduct, item)) {
                             problemFound.add("Lattosio");
                         }
                     }
                 } else if (a.equals("Soia")) {
                     for (String item : soia) {
-                        if (allergensOfProduct.contains(item)) {
+                        if (StringUtils.containsIgnoreCase(allergensOfProduct, item)) {
                             problemFound.add("Soia");
                         }
                     }
                 } else if (a.equals("Glutine")) {
                     for (String item : glutine) {
-                        if (allergensOfProduct.contains(item)) {
+                        if (StringUtils.containsIgnoreCase(allergensOfProduct, item)) {
                             problemFound.add("Glutine");
                         }
                     }
                 } else if (a.equals("Arachidi")) {
                     for (String item : arachidi) {
-                        if (allergensOfProduct.contains(item)) {
+                        if (StringUtils.containsIgnoreCase(allergensOfProduct, item)) {
                             problemFound.add("Arachidi");
                         }
                     }

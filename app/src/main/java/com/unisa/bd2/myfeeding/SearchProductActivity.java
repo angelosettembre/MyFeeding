@@ -110,8 +110,8 @@ public class SearchProductActivity extends Fragment {
         long count;
         listResult = new ArrayList<>();
         prod = product.getText().toString();
-
-        if (prod.matches("[a-zA-Z]+") || prod.matches("[0-9]+") || advanced) {
+        //|| prod.matches("[0-9]+")
+        if (prod.matches("[a-zA-Z0-9_ ]+") || advanced) {
             final ProgressDialog ringProgressDialog = ProgressDialog.show(getActivity(), "",
                     "Caricamento. Attendere...", true);
 
