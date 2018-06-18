@@ -12,7 +12,7 @@
             android:title="@string/search" />
         <item
             android:id="@+id/nav_allergens"
-            android:icon="@mipmap/allergens"
+            android:icon="@drawable/ic_allergens"
             android:title="@string/allergens" />
     </group>
 </menu>
