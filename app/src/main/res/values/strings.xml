@@ -13,5 +13,19 @@
     <string name="search">Ricerca prodotto</string>
     <string name="allergens">Allergeni</string>
 
+    <string-array name="category_item">
+        <item>Frutta</item>
+        <item>Latticini</item>
+        <item>Dolci</item>
+        <item>Pasta</item>
+        <item>Bevande</item>
+        <item>Acqua</item>
+        <item>Biscotti</item>
+        <item>Legumi</item>
+        <item>Verdure</item>
+        <item>Cereali</item>
+
+
+    </string-array>
 
 </resources>
