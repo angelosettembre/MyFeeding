@@ -38,7 +38,7 @@ import java.util.List;
 public class SearchProductActivity extends Fragment {
 
     EditText product;
-    Button searchBtn;
+    Button searchBtn,categoryBtn;
     FloatingActionButton advancedbtn;
     ArrayList<Prodotto> listResult;
     Drawable icon;
@@ -47,6 +47,9 @@ public class SearchProductActivity extends Fragment {
     MongoCollection<Document> collection;
     String[] items = {"Latte", "Glutine", "Soia", "Arachidi"};
     List<Integer> selectedItems = new ArrayList<>();
+    String[] listCategories;
+    String selectedCategories;
+
 
     @Nullable
     @Override
@@ -61,6 +64,8 @@ public class SearchProductActivity extends Fragment {
         searchBtn = view.findViewById(R.id.search_btn);
         collection = ConnectionDB.getConnection();
         advancedbtn = view.findViewById(R.id.fab_advanced_search);
+        categoryBtn = view.findViewById(R.id.categorybtn);
+        listCategories = getResources().getStringArray(R.array.category_item);
 
         product.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -68,7 +73,7 @@ public class SearchProductActivity extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    doSearch(false);
+                    doSearch(false,false);
                     return true;
                 }
                 return false;
@@ -78,7 +83,7 @@ public class SearchProductActivity extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doSearch(false);
+                doSearch(false,false);
             }
         });
 
@@ -99,27 +104,51 @@ public class SearchProductActivity extends Fragment {
                 }).setTitle("Ricerca per allergene").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        doSearch(true);
+                        doSearch(true,false);
                     }
                 }).show();
             }
         });
+
+        categoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setSingleChoiceItems(listCategories, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        selectedCategories = listCategories[i];
+                        System.out.println("CATEOGRIAAAA SCELTA "+selectedCategories);
+
+                    }
+                }).setTitle("Seleziona una categoria").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        doSearch(false,true);
+                    }
+                }).show();
+            }
+        });
+
     }
 
-    public void doSearch(boolean advanced) {
+    public void doSearch(boolean advanced,boolean categorySearch) {
         long count;
         listResult = new ArrayList<>();
         prod = product.getText().toString();
         //|| prod.matches("[0-9]+")
-        if (prod.matches("[a-zA-Z0-9_ ]+") || advanced) {
+        if (prod.matches("[a-zA-Z0-9_ ]+") || advanced || categorySearch) {
             final ProgressDialog ringProgressDialog = ProgressDialog.show(getActivity(), "",
                     "Caricamento. Attendere...", true);
 
             BasicDBObject regexQuery = new BasicDBObject();
-            if (!advanced) {
+            if (!advanced && !categorySearch) {
                 regexQuery.put("product_name", new BasicDBObject("$regex", prod).append("$options", "i"));
-            } else {
+            } else if(advanced) {
                 regexQuery.put("allergens", new BasicDBObject("$regex", generateSearchString()).append("$options", "i"));
+            }else if(categorySearch){
+                regexQuery.put("categories", new BasicDBObject("$regex", selectedCategories).append("$options", "i"));
+
             }
 
             result = collection.find(regexQuery);

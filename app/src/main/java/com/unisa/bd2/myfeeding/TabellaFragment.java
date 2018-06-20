@@ -145,21 +145,87 @@ public class TabellaFragment extends Fragment {
             }
             /*GRASSI*/
             if (prod.getFat100() != null) {
-                if (prod.getFat100().length() == 3) {
-                    grassValue.setText(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
-
+                if(prod.getFat100().length() > 4){
+                    grassValue.setText(prod.getFat100().substring(0, prod.getFat100().length() - 1) + " g");
+                }
+                if(prod.getFat100().length() == 4){
+                    if(prod.getFat100().contains(".")){
+                        grassValue.setText(prod.getFat100()+ " g");
+                    } else {
+                        grassValue.setText(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
+                    }
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(3))) + " g"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(3))) + " g"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " ml"));
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(3))) + " ml"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " cl"));
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(3))) + " cl"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(3))) + " g"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getFat100().length() == 3){
+                    if(prod.getFat100().contains(".")){
+                        grassValue.setText(prod.getFat100() + " g");
+                    } else {
+                        grassValue.setText(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
+                    }
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(2))) + " g"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(2))) + " g"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(2))) + " ml"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(2))) + " cl"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getFat100().contains(".")){
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 1) + "." + prod.getFat100().charAt(2))) + " g"));
+                            } else {
+                                grassPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getFat100().substring(0, 3) + "." + prod.getFat100().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -204,21 +270,87 @@ public class TabellaFragment extends Fragment {
             }
             /*GRASSI SATURI*/
             if (prod.getSaturated_fat() != null) {
-                if (prod.getSaturated_fat().length() == 3) {
-                    grassSaturiValue.setText(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(2) + " g");
-
+                if(prod.getSaturated_fat().length() > 4){
+                    grassSaturiValue.setText(prod.getSaturated_fat().substring(0, prod.getSaturated_fat().length() - 1)+ " g");
+                }
+                if(prod.getSaturated_fat().length() == 4){
+                    if(prod.getSaturated_fat().contains(".")){
+                        grassSaturiValue.setText(prod.getSaturated_fat() + " g");
+                    } else {
+                        grassSaturiValue.setText(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(2) + " g");
+                    }
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(3))) + " g"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(3))) + " g"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " ml"));
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(3))) + " ml"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " cl"));
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(3))) + " cl"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(3))) + " g"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getSaturated_fat().length() == 3) {
+                    if(prod.getSaturated_fat().contains(".")){
+                        grassSaturiValue.setText(prod.getSaturated_fat() + " g");
+                    } else {
+                        grassSaturiValue.setText(prod.getSaturated_fat().substring(0, 2) + "." + prod.getSaturated_fat().charAt(2) + " g");
+                    }
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(2))) + " ml"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(2))) + " cl"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getSaturated_fat().contains(".")){
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 1) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            } else {
+                                grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSaturated_fat().substring(0, 3) + "." + prod.getSaturated_fat().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -265,22 +397,87 @@ public class TabellaFragment extends Fragment {
 
             /*CARBOIDRATI*/
             if (prod.getCarbohydrates100() != null) {
-
-                if (prod.getCarbohydrates100().length() == 3) {
-                    carboidratoValue.setText(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(2) + " g");
-
+                if(prod.getCarbohydrates100().length() > 4){
+                    carboidratoValue.setText(prod.getCarbohydrates100().substring(0, prod.getCarbohydrates100().length() - 1)+ " g");
+                }
+                if(prod.getCarbohydrates100().length() == 4){
+                    if(prod.getCarbohydrates100().contains(".")){
+                        carboidratoValue.setText(prod.getCarbohydrates100()+ " g");
+                    } else {
+                        carboidratoValue.setText(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(2) + " g");
+                    }
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(3))) + " g"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(3))) + " g"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " ml"));
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(3))) + " ml"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " cl"));
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(3))) + " cl"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            grassSaturiPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(3))) + " g"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getCarbohydrates100().length() == 3) {
+                    if(prod.getCarbohydrates100().contains(".")){
+                        carboidratoValue.setText(prod.getCarbohydrates100() + " g");
+                    } else {
+                        carboidratoValue.setText(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(2) + " g");
+                    }
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(2))) + " ml"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(2))) + " cl"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getCarbohydrates100().contains(".")){
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 1) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            } else {
+                                carboidratoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCarbohydrates100().substring(0, 3) + "." + prod.getCarbohydrates100().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -326,22 +523,89 @@ public class TabellaFragment extends Fragment {
 
             /*ZUCCHERI*/
             if (prod.getSugars100() != null) {
-
-                if (prod.getSugars100().length() == 3) {
-                    zuccheriValue.setText(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(2) + " g");
+                if(prod.getSugars100().length() > 4){
+                    zuccheriValue.setText(prod.getSugars100().substring(0, prod.getSugars100().length() - 1)+ " g");
+                }
+                if (prod.getSugars100().length() == 4) {
+                    if(prod.getSugars100().contains(".")){
+                        zuccheriValue.setText(prod.getSugars100() + " g");
+                    } else {
+                        zuccheriValue.setText(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(2) + " g");
+                    }
 
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(3))) + " g"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(3))) + " g"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " ml"));
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(2))) + " ml"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " cl"));
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(3))) + " cl"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(3))) + " g"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getSugars100().length() == 3) {
+                    if(prod.getSugars100().contains(".")){
+                        zuccheriValue.setText(prod.getSugars100() + " g");
+                    } else {
+                        zuccheriValue.setText(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(2) + " g");
+                    }
+
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(2))) + " ml"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(2))) + " cl"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getSugars100().contains(".")){
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 1) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            } else {
+                                zuccheriPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSugars100().substring(0, 3) + "." + prod.getSugars100().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -387,22 +651,89 @@ public class TabellaFragment extends Fragment {
 
             /*PROTEINE*/
             if (prod.getProteins100() != null) {
-
-                if (prod.getProteins100().length() == 3) {
-                    proteineValue.setText(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(2) + " g");
+                if(prod.getProteins100().length() > 4){
+                    proteineValue.setText(prod.getProteins100().substring(0, prod.getProteins100().length() - 1)+ " g");
+                }
+                if (prod.getProteins100().length() == 4) {
+                    if(prod.getProteins100().contains(".")){
+                        proteineValue.setText(prod.getProteins100() + " g");
+                    } else {
+                        proteineValue.setText(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(2) + " g");
+                    }
 
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(3))) + " g"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(3))) + " g"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " ml"));
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(3))) + " ml"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " cl"));
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(3))) + " cl"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            if(prod.getProteins100().contains(".")) {
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(3))) + " g"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getProteins100().length() == 3) {
+                    if(prod.getProteins100().contains(".")){
+                        proteineValue.setText(prod.getProteins100() + " g");
+                    } else {
+                        proteineValue.setText(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(2) + " g");
+                    }
+
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(2))) + " ml"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getProteins100().contains(".")){
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(2))) + " cl"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getProteins100().contains(".")) {
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 1) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            } else {
+                                proteinePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getProteins100().substring(0, 3) + "." + prod.getProteins100().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -448,22 +779,89 @@ public class TabellaFragment extends Fragment {
 
             /*SODIO*/
             if (prod.getSodium100() != null) {
-
-                if (prod.getSodium100().length() == 3) {
-                    sodioValue.setText(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(2) + " g");
+                if(prod.getSodium100().length() > 4){
+                    sodioValue.setText(prod.getSodium100().substring(0, prod.getSodium100().length() - 1)+ " g");
+                }
+                if (prod.getSodium100().length() == 4) {
+                    if(prod.getSodium100().contains(".")) {
+                        sodioValue.setText(prod.getSodium100() + " g");
+                    } else {
+                        sodioValue.setText(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(2) + " g");
+                    }
 
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(3))) + " g"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(3))) + " g"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " ml"));
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(3))) + " ml"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " cl"));
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(3))) + " cl"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(3))) + " g"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getSodium100().length() == 3) {
+                    if(prod.getSodium100().contains(".")) {
+                        sodioValue.setText(prod.getSodium100() + " g");
+                    } else {
+                        sodioValue.setText(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(2) + " g");
+                    }
+
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(2))) + " ml"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(2))) + " cl"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getSodium100().contains(".")) {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 1) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            } else {
+                                sodioPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSodium100().substring(0, 3) + "." + prod.getSodium100().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -509,22 +907,89 @@ public class TabellaFragment extends Fragment {
 
             /*SALE*/
             if (prod.getSalt100() != null) {
-
-                if (prod.getSalt100().length() == 3) {
-                    saleValue.setText(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(2) + " g");
+                if(prod.getSalt100().length() > 4){
+                    saleValue.setText(prod.getSalt100().substring(0, prod.getSalt100().length() - 1)+ " g");
+                }
+                if (prod.getSalt100().length() == 4) {
+                    if(prod.getSalt100().contains(".")) {
+                        saleValue.setText(prod.getSalt100() + " g");
+                    } else {
+                        saleValue.setText(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(2) + " g");
+                    }
 
                     if (prod.getServing().length() < 7) {
                         if (prod.getServing().contains(".")) {
-                            salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(3))) + " g"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" g")) {
-                            salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(3))) + " g"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            }
                         } else if (prod.getServing().contains(" ml")) {
-                            salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " ml"));
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(3))) + " ml"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " ml"));
+                            }
                         } else if (prod.getServing().contains(" cl")) {
-                            salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " cl"));
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(3))) + " cl"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " cl"));
+                            }
                         } else {
                             String s = prod.getServing().replace("g", " g");
-                            salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(3))) + " g"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getSalt100().length() == 3) {
+                    if(prod.getSalt100().contains(".")) {
+                        saleValue.setText(prod.getSalt100() + " g");
+                    } else {
+                        saleValue.setText(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(2) + " g");
+                    }
+
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(2))) + " ml"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(2))) + " cl"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if(prod.getSalt100().contains(".")) {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 1) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            } else {
+                                salePortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getSalt100().substring(0, 3) + "." + prod.getSalt100().charAt(2))) + " g"));
+                            }
                         }
                     }
                 } else {
@@ -570,60 +1035,125 @@ public class TabellaFragment extends Fragment {
 
             /*CACAO*/
             if (prod.getCacao() != null) {
-
-                if (prod.getCacao() != null) {
-                    if (prod.getCacao().length() == 3) {
+                if(prod.getCacao().length() > 4){
+                    cacaoValue.setText(prod.getCacao().substring(0, prod.getCacao().length() - 1)+ " g");
+                }
+                if (prod.getCacao().length() == 4) {
+                    if (prod.getCacao().contains(".")) {
+                        cacaoValue.setText(prod.getCacao() + " g");
+                    } else {
                         cacaoValue.setText(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(2) + " g");
+                    }
 
-                        if (prod.getServing().length() < 7) {
-                            if (prod.getServing().contains(".")) {
-                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
-                            } else if (prod.getServing().contains(" g")) {
-                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
-                            } else if (prod.getServing().contains(" ml")) {
-                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " ml"));
-                            } else if (prod.getServing().contains(" cl")) {
-                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " cl"));
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(3))) + " g"));
                             } else {
-                                String s = prod.getServing().replace("g", " g");
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(3))) + " g"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(3))) + " ml"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(3))) + " cl"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(3))) + " g"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
+                            }
+                        }
+                    }
+                } else if (prod.getCacao().length() == 3) {
+                    if (prod.getCacao().contains(".")) {
+                        cacaoValue.setText(prod.getCacao() + " g");
+                    } else {
+                        cacaoValue.setText(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(2) + " g");
+                    }
+
+                    if (prod.getServing().length() < 7) {
+                        if (prod.getServing().contains(".")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(2))) + " g"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" g")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(2))) + " g"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
+                            }
+                        } else if (prod.getServing().contains(" ml")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(2))) + " ml"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " ml"));
+                            }
+                        } else if (prod.getServing().contains(" cl")) {
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(2))) + " cl"));
+                            } else {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " cl"));
+                            }
+                        } else {
+                            String s = prod.getServing().replace("g", " g");
+                            if (prod.getCacao().contains(".")) {
+                                cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(2))) + " g"));
+                            } else {
                                 cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 3) + "." + prod.getCacao().charAt(2))) + " g"));
                             }
                         }
-                    } else {
-                        if (prod.getCacao().length() <= 2) {
-                            if (prod.getCacao().length() == 1) {
-                                cacaoValue.setText("0." + prod.getCacao() + " g");
+                    }
+                } else {
+                    if (prod.getCacao().length() <= 2) {
+                        if (prod.getCacao().length() == 1) {
+                            cacaoValue.setText("0." + prod.getCacao() + " g");
 
-                                if (prod.getServing().length() < 7) {
-                                    if (prod.getServing().contains(".")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao())) + " g"));
-                                    } else if (prod.getServing().contains(" g")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao())) + " g"));
-                                    } else if (prod.getServing().contains(" ml")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao())) + " ml"));
-                                    } else if (prod.getServing().contains(" cl")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao())) + " cl"));
-                                    } else {
-                                        String s = prod.getServing().replace("g", " g");
-                                        cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao())) + " g"));
-                                    }
+                            if (prod.getServing().length() < 7) {
+                                if (prod.getServing().contains(".")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao())) + " g"));
+                                } else if (prod.getServing().contains(" g")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao())) + " g"));
+                                } else if (prod.getServing().contains(" ml")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao())) + " ml"));
+                                } else if (prod.getServing().contains(" cl")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao())) + " cl"));
+                                } else {
+                                    String s = prod.getServing().replace("g", " g");
+                                    cacaoPortion.setText(String.valueOf(calculatePortionForTwo(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao())) + " g"));
                                 }
-                            } else {
-                                cacaoValue.setText(prod.getCacao() + " g");
+                            }
+                        } else {
+                            cacaoValue.setText(prod.getCacao() + " g");
 
-                                if (prod.getServing().length() < 7) {
-                                    if (prod.getServing().contains(".")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " g"));
-                                    } else if (prod.getServing().contains(" g")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " g"));
-                                    } else if (prod.getServing().contains(" ml")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " ml"));
-                                    } else if (prod.getServing().contains(" cl")) {
-                                        cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " cl"));
-                                    } else {
-                                        String s = prod.getServing().replace("g", " g");
-                                        cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " g"));
-                                    }
+                            if (prod.getServing().length() < 7) {
+                                if (prod.getServing().contains(".")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(".", "").substring(0, 2)), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " g"));
+                                } else if (prod.getServing().contains(" g")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " g"));
+                                } else if (prod.getServing().contains(" ml")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" ml", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " ml"));
+                                } else if (prod.getServing().contains(" cl")) {
+                                    cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(prod.getServing().replace(" cl", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " cl"));
+                                } else {
+                                    String s = prod.getServing().replace("g", " g");
+                                    cacaoPortion.setText(String.valueOf(calculatePortion(Integer.parseInt(s.replace(" g", "")), Double.parseDouble(prod.getCacao().substring(0, 1) + "." + prod.getCacao().charAt(1))) + " g"));
                                 }
                             }
                         }
@@ -640,8 +1170,19 @@ public class TabellaFragment extends Fragment {
             }
             /*GRASSI*/
             if (prod.getFat100() != null) {
-                if (prod.getFat100().length() == 3) {
-                    grassValue.setText(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
+                if(prod.getFat100().length() > 4){
+                    grassValue.setText(prod.getFat100().substring(0, prod.getFat100().length() - 1)+ " g");
+                }
+                if(prod.getFat100().length() == 4){
+                    if (prod.getFat100().contains(".")) {
+                        grassValue.setText(prod.getFat100() + " g");
+                    }
+                } else if (prod.getFat100().length() == 3) {
+                    if (prod.getFat100().contains(".")) {
+                        grassValue.setText(prod.getFat100() + " g");
+                    } else {
+                        grassValue.setText(prod.getFat100().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getFat100().length() <= 2) {
                         if (prod.getFat100().length() == 1) {
@@ -654,8 +1195,19 @@ public class TabellaFragment extends Fragment {
             }
             /*GRASSI SATURI*/
             if (prod.getSaturated_fat() != null) {
-                if (prod.getSaturated_fat().length() == 3) {
-                    grassSaturiValue.setText(prod.getSaturated_fat().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
+                if(prod.getSaturated_fat().length() > 4){
+                    grassSaturiValue.setText(prod.getSaturated_fat().substring(0, prod.getSaturated_fat().length() - 1)+ " g");
+                }
+                if(prod.getSaturated_fat().length() == 4){
+                    if (prod.getSaturated_fat().contains(".")) {
+                        grassSaturiValue.setText(prod.getSaturated_fat() + " g");
+                    }
+                } else if (prod.getSaturated_fat().length() == 3) {
+                    if (prod.getFat100().contains(".")) {
+                        grassSaturiValue.setText(prod.getSaturated_fat() + " g");
+                    } else {
+                        grassSaturiValue.setText(prod.getSaturated_fat().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getSaturated_fat().length() <= 2) {
                         if (prod.getSaturated_fat().length() == 1) {
@@ -668,8 +1220,19 @@ public class TabellaFragment extends Fragment {
             }
             /*CARBOIDRATI*/
             if (prod.getCarbohydrates100() != null) {
-                if (prod.getCarbohydrates100().length() == 3) {
-                    carboidratoValue.setText(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(2) + " g");
+                if(prod.getCarbohydrates100().length() > 4){
+                    carboidratoValue.setText(prod.getCarbohydrates100().substring(0, prod.getCarbohydrates100().length() - 1)+ " g");
+                }
+                if(prod.getCarbohydrates100().length() == 4){
+                    if (prod.getCarbohydrates100().contains(".")) {
+                        carboidratoValue.setText(prod.getCarbohydrates100() + " g");
+                    }
+                } else if (prod.getCarbohydrates100().length() == 3) {
+                    if (prod.getCarbohydrates100().contains(".")) {
+                        carboidratoValue.setText(prod.getCarbohydrates100() + " g");
+                    } else {
+                        carboidratoValue.setText(prod.getCarbohydrates100().substring(0, 2) + "." + prod.getCarbohydrates100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getCarbohydrates100().length() <= 2) {
                         if (prod.getCarbohydrates100().length() == 1) {
@@ -682,8 +1245,19 @@ public class TabellaFragment extends Fragment {
             }
             /*ZUCCHERI*/
             if (prod.getSugars100() != null) {
-                if (prod.getSugars100().length() == 3) {
-                    zuccheriValue.setText(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(2) + " g");
+                if(prod.getSugars100().length() > 4){
+                    zuccheriValue.setText(prod.getSugars100().substring(0, prod.getSugars100().length() - 1)+ " g");
+                }
+                if(prod.getSugars100().length() == 4){
+                    if (prod.getSugars100().contains(".")) {
+                        zuccheriValue.setText(prod.getSugars100() + " g");
+                    }
+                } else if (prod.getSugars100().length() == 3) {
+                    if (prod.getSugars100().contains(".")) {
+                        zuccheriValue.setText(prod.getSugars100() + " g");
+                    } else {
+                        zuccheriValue.setText(prod.getSugars100().substring(0, 2) + "." + prod.getSugars100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getSugars100().length() <= 2) {
                         if (prod.getSugars100().length() == 1) {
@@ -696,8 +1270,19 @@ public class TabellaFragment extends Fragment {
             }
             /*PROTEINE*/
             if (prod.getProteins100() != null) {
-                if (prod.getProteins100().length() == 3) {
-                    proteineValue.setText(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(2) + " g");
+                if(prod.getProteins100().length() > 4){
+                    proteineValue.setText(prod.getProteins100().substring(0, prod.getProteins100().length() - 1)+ " g");
+                }
+                if(prod.getProteins100().length() == 4){
+                    if (prod.getProteins100().contains(".")) {
+                        proteineValue.setText(prod.getProteins100() + " g");
+                    }
+                } else if (prod.getProteins100().length() == 3) {
+                    if (prod.getProteins100().contains(".")) {
+                        proteineValue.setText(prod.getProteins100() + " g");
+                    } else {
+                        proteineValue.setText(prod.getProteins100().substring(0, 2) + "." + prod.getProteins100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getProteins100().length() <= 2) {
                         if (prod.getProteins100().length() == 1) {
@@ -710,8 +1295,19 @@ public class TabellaFragment extends Fragment {
             }
             /*SODIO*/
             if (prod.getSodium100() != null) {
-                if (prod.getSodium100().length() == 3) {
-                    sodioValue.setText(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(2) + " g");
+                if(prod.getSodium100().length() > 4){
+                    sodioValue.setText(prod.getSodium100().substring(0, prod.getSodium100().length() - 1)+ " g");
+                }
+                if(prod.getSodium100().length() == 4){
+                    if (prod.getSodium100().contains(".")) {
+                        sodioValue.setText(prod.getSodium100() + " g");
+                    }
+                } else if (prod.getSodium100().length() == 3) {
+                    if (prod.getSodium100().contains(".")) {
+                        sodioValue.setText(prod.getSodium100() + " g");
+                    } else {
+                        sodioValue.setText(prod.getSodium100().substring(0, 2) + "." + prod.getSodium100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getSodium100().length() <= 2) {
                         if (prod.getSodium100().length() == 1) {
@@ -724,8 +1320,19 @@ public class TabellaFragment extends Fragment {
             }
             /*SALE*/
             if (prod.getSalt100() != null) {
-                if (prod.getSalt100().length() == 3) {
-                    saleValue.setText(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(2) + " g");
+                if(prod.getSalt100().length() > 4){
+                    saleValue.setText(prod.getSalt100().substring(0, prod.getSalt100().length() - 1)+ " g");
+                }
+                if(prod.getSalt100().length() == 4){
+                    if (prod.getSalt100().contains(".")) {
+                        saleValue.setText(prod.getSalt100() + " g");
+                    }
+                } else if (prod.getSalt100().length() == 3) {
+                    if (prod.getSalt100().contains(".")) {
+                        saleValue.setText(prod.getSalt100() + " g");
+                    } else {
+                        saleValue.setText(prod.getSalt100().substring(0, 2) + "." + prod.getSalt100().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getSalt100().length() <= 2) {
                         if (prod.getSalt100().length() == 1) {
@@ -738,8 +1345,19 @@ public class TabellaFragment extends Fragment {
             }
             /*CACAO*/
             if (prod.getCacao() != null) {
-                if (prod.getCacao().length() == 3) {
-                    cacaoValue.setText(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(2) + " g");
+                if(prod.getCacao().length() > 4){
+                    cacaoValue.setText(prod.getCacao().substring(0, prod.getCacao().length() - 1)+ " g");
+                }
+                if(prod.getCacao().length() == 4){
+                    if (prod.getCacao().contains(".")) {
+                        cacaoValue.setText(prod.getCacao() + " g");
+                    }
+                } else if (prod.getCacao().length() == 3) {
+                    if (prod.getCacao().contains(".")) {
+                        cacaoValue.setText(prod.getCacao() + " g");
+                    } else {
+                        cacaoValue.setText(prod.getCacao().substring(0, 2) + "." + prod.getCacao().charAt(2) + " g");
+                    }
                 } else {
                     if (prod.getCacao().length() <= 2) {
                         if (prod.getCacao().length() == 1) {

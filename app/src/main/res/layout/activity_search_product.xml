@@ -23,11 +23,21 @@
     <Button
         android:id="@+id/search_btn"
         android:layout_below="@+id/search_bar"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CERCA PRODOTTO"
+        android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/categorybtn"
+        android:layout_below="@+id/search_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="CERCA PER CATEGORIA"
         android:textSize="20dp"/>
 
 
