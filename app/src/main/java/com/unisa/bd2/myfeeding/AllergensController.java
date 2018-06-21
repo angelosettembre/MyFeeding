@@ -12,10 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AllergensController {
-    public static String[] lattosio = {"milk", "lactose", "butter", "lattosio", "beurre", "lait", "lactose", "Laktose ", "Milch", "Butter", "lactosérum", "Magermilchpulver", "Süßmolkenpulver", "Yaourt", "cream", "latte", "Latte", "LATTE", "burro"};
-    public static String[] soia = {"soje", "soia", "soja"};
-    public static String[] glutine = {"Weizenmalz", "glutine", "Gerstenmalz", "cebada", "glúten", "trigo", "orge", "frumento", "farro", "grano", "orzo", "avena", "segale"};
-    public static String[] arachidi = {"Haselnüsse", "nocciole", "nocciola", "arachidi", "noisettes"};
+    public static String[] lattosio = {"lattosio","latte", "Latte", "LATTE", "burro"};
+    public static String[] soia = { "soia"};
+    public static String[] glutine = {"glutine","frumento", "farro", "grano", "orzo", "avena", "segale"};
+    public static String[] arachidi = {"nocciole", "nocciola", "arachidi"};
     static private Set<String> allergens;
     static private Set<String> problemFound;
     static View view;
