@@ -1203,7 +1203,7 @@ public class TabellaFragment extends Fragment {
                         grassSaturiValue.setText(prod.getSaturated_fat() + " g");
                     }
                 } else if (prod.getSaturated_fat().length() == 3) {
-                    if (prod.getFat100().contains(".")) {
+                    if (prod.getSaturated_fat().contains(".")) {
                         grassSaturiValue.setText(prod.getSaturated_fat() + " g");
                     } else {
                         grassSaturiValue.setText(prod.getSaturated_fat().substring(0, 2) + "." + prod.getFat100().charAt(2) + " g");
