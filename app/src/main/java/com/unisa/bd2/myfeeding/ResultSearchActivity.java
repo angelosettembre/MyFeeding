@@ -81,6 +81,7 @@ public class ResultSearchActivity extends Fragment {
             if (i > listProduct.size() - 1) {
                 fab_show_more.setVisibility(View.INVISIBLE);
             } else {
+                fab_show_more.setVisibility(View.VISIBLE);
                 p = listProduct.get(i);
                 adapter.add(p);
             }

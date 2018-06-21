@@ -65,5 +65,5 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@mipmap/ic_dialog_show_more_round"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 </android.support.design.widget.CoordinatorLayout>
