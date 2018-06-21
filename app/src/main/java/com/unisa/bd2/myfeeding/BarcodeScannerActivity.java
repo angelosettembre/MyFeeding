@@ -2,9 +2,7 @@ package com.unisa.bd2.myfeeding;
 
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -34,7 +30,6 @@ public class BarcodeScannerActivity extends Fragment {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
     String intentData = "";
     boolean isEmail = false;
     static boolean running = false;
@@ -50,7 +45,6 @@ public class BarcodeScannerActivity extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         txtBarcodeValue = view.findViewById(R.id.txtBarcodeValue);
         surfaceView = view.findViewById(R.id.surfaceView);
-        btnAction = view.findViewById(R.id.btnAction);
         initViews();
         running = false;
     }
@@ -58,17 +52,6 @@ public class BarcodeScannerActivity extends Fragment {
     private void initViews() {
 
 
-        btnAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (intentData.length() > 0) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-                }
-
-
-            }
-        });
     }
 
     private void initialiseDetectorsAndSources() {
@@ -129,7 +112,6 @@ public class BarcodeScannerActivity extends Fragment {
                         @Override
                         public void run() {
                             if (running == false) {
-                                btnAction.setText("LAUNCH URL");
                                 intentData = barcodes.valueAt(0).displayValue;
                                 txtBarcodeValue.setText(intentData);
                                 System.out.println("BARCOOODEE LETTOOOO " + intentData);
