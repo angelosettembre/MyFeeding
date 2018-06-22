@@ -22,23 +22,36 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.Mongo;
 import com.mongodb.QueryBuilder;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.*;
+
 public class SearchProductActivity extends Fragment {
 
     EditText product;
-    Button searchBtn,categoryBtn;
+    Button searchBtn,categoryBtn, advancedSearch;
     FloatingActionButton advancedbtn;
     ArrayList<Prodotto> listResult;
     Drawable icon;
@@ -49,6 +62,7 @@ public class SearchProductActivity extends Fragment {
     List<Integer> selectedItems = new ArrayList<>();
     String[] listCategories;
     String selectedCategories;
+    String selectedAllergens;
 
 
     @Nullable
@@ -65,6 +79,7 @@ public class SearchProductActivity extends Fragment {
         collection = ConnectionDB.getConnection();
         advancedbtn = view.findViewById(R.id.fab_advanced_search);
         categoryBtn = view.findViewById(R.id.categorybtn);
+        advancedSearch = view.findViewById(R.id.advancedSearch);
         listCategories = getResources().getStringArray(R.array.category_item);
 
         product.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -73,7 +88,7 @@ public class SearchProductActivity extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    doSearch(false,false);
+                    doSearch(false,false,false);
                     return true;
                 }
                 return false;
@@ -83,7 +98,7 @@ public class SearchProductActivity extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doSearch(false,false);
+                doSearch(false,false,false);
             }
         });
 
@@ -104,7 +119,7 @@ public class SearchProductActivity extends Fragment {
                 }).setTitle("Ricerca per allergene").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        doSearch(true,false);
+                        doSearch(true,false,false);
                     }
                 }).show();
             }
@@ -124,7 +139,40 @@ public class SearchProductActivity extends Fragment {
                 }).setTitle("Seleziona una categoria").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        doSearch(false,true);
+                        doSearch(false,true,false);
+                    }
+                }).show();
+            }
+        });
+
+
+        advancedSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setSingleChoiceItems(listCategories, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        selectedCategories = listCategories[i];
+                        System.out.println("CATEOGRIAAAA SCELTA "+selectedCategories);
+
+                    }
+                }).setTitle("Seleziona la categoria del prodotto").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        boolean[] checkedItems = {false, false, false, false};
+                        final AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
+                        builder2.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int indexSelected) {
+                                selectedAllergens = items[indexSelected];
+                            }
+                        }).setTitle("Seleziona allergene").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                doSearch(false,false,true);
+                            }
+                        }).show();
                     }
                 }).show();
             }
@@ -132,121 +180,165 @@ public class SearchProductActivity extends Fragment {
 
     }
 
-    public void doSearch(boolean advanced,boolean categorySearch) {
-        long count;
+    public void doSearch(boolean advanced,boolean categorySearch,boolean advancedSearch) {
+        long count = 0;
         listResult = new ArrayList<>();
         prod = product.getText().toString();
+
         //|| prod.matches("[0-9]+")
-        if (prod.matches("[a-zA-Z0-9_ ]+") || advanced || categorySearch) {
+        if (prod.matches("[a-zA-Z0-9_ ]+") || advanced || categorySearch || advancedSearch) {
             final ProgressDialog ringProgressDialog = ProgressDialog.show(getActivity(), "",
                     "Caricamento. Attendere...", true);
 
-            BasicDBObject regexQuery = new BasicDBObject();
-            if (!advanced && !categorySearch) {
-                regexQuery.put("product_name", new BasicDBObject("$regex", prod).append("$options", "i"));
-            } else if(advanced) {
-                regexQuery.put("allergens", new BasicDBObject("$regex", generateSearchString()).append("$options", "i"));
-            }else if(categorySearch){
-                regexQuery.put("categories", new BasicDBObject("$regex", selectedCategories).append("$options", "i"));
+            if(advancedSearch){
+                BasicDBObject regexQuery2 = new BasicDBObject();
 
+
+                String input="";
+
+                System.out.println("GENERATEEEEEEEEEEEEEEEEEE STRING "+selectedAllergens);
+
+                if(selectedAllergens.contains("Glutine")){
+                    input =  Arrays.toString(AllergensController.glutine).replace("[", "").replace("]", "").replace(" ","").replace(",", "|");
+
+                }
+                else if(selectedAllergens.contains("Soia")){
+                    input =  Arrays.toString(AllergensController.soia).replace("[", "").replace("]", "").replace(" ","").replace(",", "|");
+
+
+                }
+                else if(selectedAllergens.contains("Latte")){
+                    input =  Arrays.toString(AllergensController.lattosio).replace("[", "").replace("]", "").replace(" ","").replace(",", "|");
+
+
+                }
+                else if(selectedAllergens.contains("Arachidi")){
+                    input =  Arrays.toString(AllergensController.arachidi).replace("[", "").replace("]", "").replace(" ","").replace(",", "|") ;
+
+                }
+
+
+                System.out.println("INPUTTTTTTT "+input);
+
+                regexQuery2.put("categories", new BasicDBObject("$regex", selectedCategories).append("$options", "i"));
+
+
+                String pattern = ".*" + selectedCategories + ".*";
+                String pattern2 = ".*" + input+ ".*";
+
+
+                result = collection.find(and(regex("categories",pattern,"i"),regex("allergens",pattern2,"i")));
+                count = collection.count(regexQuery2);
+
+
+            } else {
+                BasicDBObject regexQuery = new BasicDBObject();
+                if (!advanced && !categorySearch) {
+                    regexQuery.put("product_name", new BasicDBObject("$regex", prod).append("$options", "i"));
+                } else if (advanced) {
+                    regexQuery.put("allergens", new BasicDBObject("$regex", generateSearchString()).append("$options", "i"));
+                } else if (categorySearch) {
+                    regexQuery.put("categories", new BasicDBObject("$regex", selectedCategories).append("$options", "i"));
+
+                }
+
+                result = collection.find(regexQuery);
+                count = collection.count(regexQuery);
             }
-
-            result = collection.find(regexQuery);
-            count = collection.count(regexQuery);
-
             if (count == 0) {
                 Toast.makeText(getContext().getApplicationContext(), "PRODOTTO NON TROVATO", Toast.LENGTH_SHORT).show();
                 ringProgressDialog.dismiss();
             } else {
                 ringProgressDialog.setCancelable(false);
-                Thread th = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Document d : result) {
-                            try {
-                                listResult.add(new Prodotto(d.getLong("code"),
-                                        d.getString("product_name"),
-                                        d.getString("image_url"),
-                                        d.getString("generic_name"),
-                                        downloadImage(d.getString("image_url")),
-                                        d.getString("quantity"),
-                                        d.getString("brands"),
-                                        d.getString("ingredients_text"),
-                                        d.getString("image_ingredients_url"),
-                                        d.getString("allergens"),
-                                        d.getString("image_nutrition_url"),
-                                        d.getString("energy_100g"),
-                                        d.getString("fat_100g"),
-                                        d.getString("carbohydrates_100g"),
-                                        d.getString("sugars_100g"),
-                                        d.getString("fiber_100g"),
-                                        d.getString("proteins_100g"),
-                                        d.getString("salt_100g"),
-                                        d.getString("sodium_100g"),
-                                        d.getString("nutrition_grade_fr"),
-                                        d.getString("additives_en"),
-                                        d.getString("ingredients_from_palm_oil_tags"),
-                                        d.getString("traces"),
-                                        d.getString("serving_size"),
-                                        d.getString("saturated-fat_100g"),
-                                        d.getString("cocoa_100g")));
+                    Thread th = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (Document d : result) {
+                                try {
+                                    listResult.add(new Prodotto(d.getLong("code"),
+                                            d.getString("product_name"),
+                                            d.getString("image_url"),
+                                            d.getString("generic_name"),
+                                            downloadImage(d.getString("image_url")),
+                                            d.getString("quantity"),
+                                            d.getString("brands"),
+                                            d.getString("ingredients_text"),
+                                            d.getString("image_ingredients_url"),
+                                            d.getString("allergens"),
+                                            d.getString("image_nutrition_url"),
+                                            d.getString("energy_100g"),
+                                            d.getString("fat_100g"),
+                                            d.getString("carbohydrates_100g"),
+                                            d.getString("sugars_100g"),
+                                            d.getString("fiber_100g"),
+                                            d.getString("proteins_100g"),
+                                            d.getString("salt_100g"),
+                                            d.getString("sodium_100g"),
+                                            d.getString("nutrition_grade_fr"),
+                                            d.getString("additives_en"),
+                                            d.getString("ingredients_from_palm_oil_tags"),
+                                            d.getString("traces"),
+                                            d.getString("serving_size"),
+                                            d.getString("saturated-fat_100g"),
+                                            d.getString("cocoa_100g")));
 
-                                System.out.println("DOCUMENTOOO " + d.getLong("code") + " " + d.getString("product_name")
-                                        + " " + d.getString("image_url") + " " + d.getString("generic_name"));
-                                System.out.println("DOCUMENTOOO " + d.toJson());
-                                System.out.println(" \n");
-                            } catch (Exception e) {
-                                icon = getResources().getDrawable(R.drawable.image_not_found);
-                                Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
-                                listResult.add(new Prodotto(d.getLong("code"),
-                                        d.getString("product_name"),
-                                        d.getString("image_url"),
-                                        d.getString("generic_name"),
-                                        ((BitmapDrawable) icon).getBitmap(),
-                                        d.getString("quantity"),
-                                        d.getString("brands"),
-                                        d.getString("ingredients_text"),
-                                        d.getString("image_ingredients_url"),
-                                        d.getString("allergens"),
-                                        d.getString("image_nutrition_url"),
-                                        d.getString("energy_100g"),
-                                        d.getString("fat_100g"),
-                                        d.getString("carbohydrates_100g"),
-                                        d.getString("sugars_100g"),
-                                        d.getString("fiber_100g"),
-                                        d.getString("proteins_100g"),
-                                        d.getString("salt_100g"),
-                                        d.getString("sodium_100g"),
-                                        d.getString("nutrition_grade_fr"),
-                                        d.getString("additives_en"),
-                                        d.getString("ingredients_from_palm_oil_tags"),
-                                        d.getString("traces"),
-                                        d.getString("serving_size"),
-                                        d.getString("saturated-fat_100g"),
-                                        d.getString("cocoa_100g")));
-                                e.printStackTrace();
+                                    System.out.println("DOCUMENTOOO " + d.getLong("code") + " " + d.getString("product_name")
+                                            + " " + d.getString("image_url") + " " + d.getString("generic_name"));
+                                    System.out.println("DOCUMENTOOO " + d.toJson());
+                                    System.out.println(" \n");
+                                } catch (Exception e) {
+                                    icon = getResources().getDrawable(R.drawable.image_not_found);
+                                    Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
+                                    listResult.add(new Prodotto(d.getLong("code"),
+                                            d.getString("product_name"),
+                                            d.getString("image_url"),
+                                            d.getString("generic_name"),
+                                            ((BitmapDrawable) icon).getBitmap(),
+                                            d.getString("quantity"),
+                                            d.getString("brands"),
+                                            d.getString("ingredients_text"),
+                                            d.getString("image_ingredients_url"),
+                                            d.getString("allergens"),
+                                            d.getString("image_nutrition_url"),
+                                            d.getString("energy_100g"),
+                                            d.getString("fat_100g"),
+                                            d.getString("carbohydrates_100g"),
+                                            d.getString("sugars_100g"),
+                                            d.getString("fiber_100g"),
+                                            d.getString("proteins_100g"),
+                                            d.getString("salt_100g"),
+                                            d.getString("sodium_100g"),
+                                            d.getString("nutrition_grade_fr"),
+                                            d.getString("additives_en"),
+                                            d.getString("ingredients_from_palm_oil_tags"),
+                                            d.getString("traces"),
+                                            d.getString("serving_size"),
+                                            d.getString("saturated-fat_100g"),
+                                            d.getString("cocoa_100g")));
+                                    e.printStackTrace();
+                                }
+                                if (listResult.size() == 10) {
+                                    //
+                                }
                             }
-                            if(listResult.size()==10){
-                                //
-                            }
+
+
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelableArrayList("lista", listResult);
+
+                            Fragment fragment = new ResultSearchActivity();
+                            fragment.setArguments(bundle);
+                            getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("search").commit();
+
+
+                            //after he logic is done, close the progress dialog
+                            ringProgressDialog.dismiss();
                         }
-
-
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelableArrayList("lista", listResult);
-
-                        Fragment fragment = new ResultSearchActivity();
-                        fragment.setArguments(bundle);
-                        getFragmentManager().beginTransaction().add(R.id.content_frame, fragment).addToBackStack("search").commit();
-
-
-                        //after he logic is done, close the progress dialog
-                        ringProgressDialog.dismiss();
-                    }
-                });
-                th.start();
+                    });
+                    th.start();
+                }
             }
-        }
+
     }
 
     private String generateSearchString() {
