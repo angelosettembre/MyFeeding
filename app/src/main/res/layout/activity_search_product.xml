@@ -40,6 +40,16 @@
         android:text="CERCA PER CATEGORIA"
         android:textSize="20dp"/>
 
+    <Button
+        android:id="@+id/advancedSearch"
+        android:layout_below="@id/categorybtn"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="RICERCA PER CATEGORIA E\n ALLERGENE"
+        android:textSize="20dp"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_advanced_search"

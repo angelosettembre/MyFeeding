@@ -18,7 +18,7 @@ public class AllergensController {
     public static String[] arachidi = {"nocciole", "nocciola", "arachidi"};
     static String[] lattosioCheck = {"milk", "lactose", "butter", "beurre", "lait", "lactose", "Laktose ", "Milch", "Butter", "lactosérum", "Magermilchpulver", "Süßmolkenpulver", "Yaourt", "cream", "latte", "burro"};
     static String[] soiaCheck = {"soje", "soia", "soja"};
-    static String[] glutineCheck = {"Weizenmalz", "Gerstenmalz", "cebada", "glúten", "trigo", "orge", "frumento", "farro", "grano", "orzo", "avena", "segale"};
+    static String[] glutineCheck = {"Weizenmalz", "Gerstenmalz", "cebada", "glúten", "trigo", "orge","glutine","frumento", "farro", "grano", "orzo", "avena", "segale"};
     static String[] arachidiCheck = {"Haselnüsse", "nocciole", "nocciola", "arachidi", "noisettes"};
 
     static private Set<String> allergens;
