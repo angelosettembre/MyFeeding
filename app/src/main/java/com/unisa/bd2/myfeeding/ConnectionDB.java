@@ -18,7 +18,7 @@ public class ConnectionDB {
             StrictMode.setThreadPolicy(policy);
         }
 
-        MongoClient mongoClient = new MongoClient("34.207.149.93", 27017);
+        MongoClient mongoClient = new MongoClient("18.207.188.216", 27017);
 
         System.out.println("COLLEGATO ");
 
